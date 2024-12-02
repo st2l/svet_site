@@ -1,0 +1,8 @@
+flask
+sqlalchemy
+flask-sqlalchemy
+werkzeug
+WTForms==3.1.2 
+python-dotenv
+flask-login
+flask-admin

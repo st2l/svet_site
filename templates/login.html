@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- Подключаем стили для формы -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}">
+
+<!-- Контейнер для формы логина -->
+<div class="register-form-container">
+    <div class="form-card">
+        <h2>Вход</h2>
+
+            <!-- Выводим ошибки, если они есть -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="alert-container">
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+        <form method="POST" action="{{ url_for('login') }}">
+            <!-- Поле для имени пользователя -->
+            <div class="form-group">
+                <label for="username">Имя пользователя</label>
+                <input type="text" name="username" id="username" required>
+            </div>
+            <!-- Поле для пароля -->
+            <div class="form-group">
+                <label for="password">Пароль</label>
+                <input type="password" name="password" id="password" required>
+            </div>
+            <!-- Кнопка отправки формы -->
+            <button type="submit" class="btn">Войти</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

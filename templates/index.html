@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+
+<section class="index-hero">
+    <div class="index-container">
+        <h1>Добро пожаловать в интернет-магазин уличных светильников</h1>
+        <p>Осветите свой мир с нашими современными и надежными решениями.</p>
+        <a href="{{ url_for('products') }}" class="index-btn-primary">Купить сейчас</a>
+    </div>
+</section>
+
+<section class="index-popular-products">
+    <div class="index-container">
+        <h2>Популярные товары</h2>
+        <div class="index-products-grid">
+            <div class="index-product-card">
+                <img src="{{ url_for('static', filename='img/product1.jpg') }}" alt="Светильник 1">
+                <h3>Уличный светильник A1</h3>
+                <p>Надежный и долговечный светильник для освещения.</p>
+                <a href="{{ url_for('products') }}" class="index-btn-secondary">Подробнее</a>
+            </div>
+            <div class="index-product-card">
+                <img src="{{ url_for('static', filename='img/product2.jpg') }}" alt="Светильник 2">
+                <h3>Уличный светильник B2</h3>
+                <p>Энергосберегающий дизайн для современных пространств.</p>
+                <a href="{{ url_for('products') }}" class="index-btn-secondary">Подробнее</a>
+            </div>
+            <div class="index-product-card">
+                <img src="{{ url_for('static', filename='img/product3.jpg') }}" alt="Светильник 3">
+                <h3>Уличный светильник C3</h3>
+                <p>Элегантное решение для сада или парковки.</p>
+                <a href="{{ url_for('products') }}" class="index-btn-secondary">Подробнее</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="index-contact-info">
+    <div class="index-container">
+        <h2>Связаться с нами</h2>
+        <p>Есть вопросы? Напишите нам или позвоните!</p>
+        <a href="{{ url_for('contact') }}" class="index-btn-primary">Связаться</a>
+    </div>
+</section>
+{% endblock %}

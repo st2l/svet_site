@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Уличные светильники</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+
+
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="logo">
+                <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Лого">
+            </div>
+            <nav class="navigation">
+                <ul>
+                    <li><a href="{{ url_for('index') }}">Главная</a></li>
+                    <li><a href="{{ url_for('products') }}">Товары</a></li>
+                    <li><a href="{{ url_for('contact') }}">Связаться с нами</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                {% if current_user.is_authenticated %}
+                    <!-- Если пользователь авторизован, показываем кнопку выхода -->
+                    <a href="{{ url_for('logout') }}"><button id="logout-btn">Выход</button></a>
+                {% else %}
+                    <!-- Если пользователь не авторизован, показываем кнопки входа и регистрации -->
+                    <a href="{{ url_for('login') }}"><button id="login-btn">Вход</button></a>
+                    <a href="{{ url_for('register') }}"><button id="register-btn">Регистрация</button></a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+
+</body>
+</html>
