@@ -1,9 +1,9 @@
 from models import User
 from models import db
-from config import Config
+from .config import Config
 from datetime import datetime
 
-def create_initial_admin(app):
+def create_initial_admin(app, db):
 
     print(Config.ADMIN_NAME, Config.ADMIN_EMAIL, Config.ADMIN_PASSWD)
 
