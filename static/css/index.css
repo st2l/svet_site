@@ -1,141 +1,146 @@
 /* Общий контейнер */
 .index-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Hero Section */
 .index-hero {
-    background-color: #ffc107;
-    color: #000;
-    text-align: center;
-    padding: 50px 20px;
-    width: 100%;
-    margin-bottom: 30px;
+  background-color: #ffc107;
+  color: #000;
+  text-align: center;
+  padding: 50px 20px;
+  width: 100%;
+  margin-bottom: 30px;
 }
 
 .index-hero h1 {
-    font-size: 2.5em;
-    margin-bottom: 20px;
+  font-size: 2.5em;
+  margin-bottom: 20px;
 }
 
 .index-hero p {
-    font-size: 1.2em;
-    margin-bottom: 30px;
+  font-size: 1.2em;
+  margin-bottom: 30px;
 }
 
 .index-btn-primary {
-    background-color: #000;
-    color: #ffc107;
-    padding: 10px 20px;
-    text-decoration: none;
-    font-weight: bold;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+  background-color: #000;
+  color: #ffc107;
+  padding: 10px 20px;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
 }
 
 .index-btn-primary:hover {
-    background-color: #333;
+  background-color: #333;
 }
 
 /* Popular Products Section */
 .index-popular-products {
-    padding: 50px 20px;
-    background-color: #f4f4f4;
-    width: 100%;
-    margin-bottom: 30px;
+  padding: 50px 20px;
+  background-color: #f4f4f4;
+  width: 100%;
+  margin-bottom: 30px;
 }
 
 .index-popular-products h2 {
-    text-align: center;
-    margin-bottom: 30px;
-    font-size: 2em;
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2em;
 }
 
 /* Продуктовая сетка */
 .index-products-grid {
-    display: grid;
-    gap: 20px;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Адаптивная сетка */
-    width: 100%;
-    justify-items: center; /* Центрирование карточек по горизонтали */
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(300px, 1fr)
+  ); /* Адаптивная сетка */
+  width: 100%;
+  justify-items: center; /* Центрирование карточек по горизонтали */
 }
 
 .index-product-card {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 20px;
-    text-align: center;
-    transition: box-shadow 0.3s ease;
-    width: 100%;
-    max-width: 300px; /* Максимальная ширина карточки */
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  transition: box-shadow 0.3s ease;
+  width: 100%;
+  max-width: 300px; /* Максимальная ширина карточки */
 }
 
 .index-product-card:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .index-product-card img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 5px;
-    margin-bottom: 15px;
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-bottom: 15px;
 }
 
 .index-product-card h3 {
-    font-size: 1.2em;
-    margin-bottom: 10px;
+  font-size: 1.2em;
+  margin-bottom: 10px;
 }
 
 .index-product-card p {
-    font-size: 0.9em;
-    color: #555;
-    margin-bottom: 15px;
+  font-size: 0.9em;
+  color: #555;
+  margin-bottom: 15px;
 }
 
 .index-btn-secondary {
-    background-color: #ffc107;
-    color: #000;
-    padding: 8px 15px;
-    text-decoration: none;
-    font-weight: bold;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+  background-color: #ffc107;
+  color: #000;
+  padding: 8px 15px;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
 }
 
 .index-btn-secondary:hover {
-    background-color: #ff8f00;
+  background-color: #ff8f00;
 }
 
 /* Contact Info Section */
 .index-contact-info {
-    padding: 50px 20px;
-    background-color: #000;
-    color: #fff;
-    text-align: center;
-    width: 100%;
+  padding: 50px 20px;
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+  width: 100%;
 }
 
 .index-contact-info h2 {
-    margin-bottom: 20px;
-    font-size: 2em;
+  margin-bottom: 20px;
+  font-size: 2em;
 }
 
 .index-btn-primary {
-    background-color: #ffc107;
-    color: #000;
-    padding: 10px 20px;
-    text-decoration: none;
-    font-weight: bold;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+  background-color: #ffc107;
+  color: #000;
+  padding: 10px 20px;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
 }
 
 .index-btn-primary:hover {
-    background-color: #ff8f00;
+  background-color: #ff8f00;
 }
+
+

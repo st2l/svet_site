@@ -50,8 +50,8 @@ class Lamp(db.Model):
     subsubcategory = db.relationship(
         SubSubCategory, backref='Товары (заполнять не надо)')
 
-    model = db.Column(db.String(150), nullable=False)  # Модель
-    article = db.Column(db.String(100), nullable=False, unique=True)  # Артикул
+    model = db.Column(db.String(150), nullable=True)  # Модель
+    article = db.Column(db.String(100), nullable=True)  # Артикул
     # Метка "Уточнить наличие"
     availability = db.Column(db.String(100), nullable=True)
     series = db.Column(db.String(150), nullable=True)  # Серия (коллекция)

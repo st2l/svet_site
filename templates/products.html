@@ -1,0 +1,76 @@
+{% extends "base.html" %} {% block content %}
+
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/products.css') }}"
+/>
+
+<main class="products-block">
+  <div class="products-sidebar">
+    <h2>Категории</h2>
+    <ul class="products-category-list">
+      {% for category in categories %}
+        <li class="products-dropdown">
+          <div class="dropdown-wrapper">
+            <a href="#" class="products-category-name">{{ category.name }}</a>
+            <div class="products-dropdown-content">
+              {% for subcategory in subcategories %}
+              {% if subcategory.category_id == category.id %}
+                <div class="dropdown-item">
+                  <img
+                    src="/static/img/{{ subcategory.image }}"
+                    alt="тут будет картинк..."
+                    class="dropdown-image"
+                  />
+                  <a href=""><h3 class="dropdown-title">{{ subcategory.name }}</h3></a>
+                  <div class="sub-category-space">
+                    {% for sub_subcategory in sub_subcategories %}
+                      {% if sub_subcategory.subcategory_id == subcategory.id %}
+                        <a href="#sub-category3" class="sub-category-link">{{ sub_subcategory.name }}</a>
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                </div>
+              {% endif %}
+              {% endfor %}
+              
+            </div>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="products-content-wrapper">
+    <div class="products-content">
+      <div class="products-grid">
+        {% if lamps %} {% for lamp in lamps %}
+
+        <div
+          class="product-card"
+          data-product-id="{{ lamp.id }}"
+          onclick="redirectToProductPage({{ lamp.id }})"
+        >
+          <img
+            src="static/img/{{ lamp.main_image }}"
+            alt="Product Image"
+            class="product-image"
+          />
+          <h3 class="product-name">{{ lamp.name }}</h3>
+          <p class="product-category">Категория: {{ lamp.subsubcategory }}</p>
+          <p class="product-price">Цена: {{ lamp.price }} ₽</p>
+          <button class="add-to-cart" onclick="addToCart(event, {{ lamp.id }})">
+            Добавить в корзину
+          </button>
+        </div>
+      </div>
+
+      {% endfor %} {% else %}
+      <p>Пока тут пусто...</p>
+      {% endif %}
+    </div>
+  </div>
+</main>
+
+<script src="{{ url_for('static', filename='js/products.js') }}"></script>
+
+{% endblock %}

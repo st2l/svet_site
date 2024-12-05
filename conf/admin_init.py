@@ -2,6 +2,7 @@ from sqlalchemy.orm import configure_mappers
 from flask_admin.contrib.sqla import ModelView
 from flask_login import current_user
 from flask_admin import Admin
+from flask_admin.form import FileUploadField
 from models import User, Category, SubCategory, SubSubCategory, Lamp
 
 
@@ -22,6 +23,20 @@ def admin_init(app, db):
             # Перенаправление на страницу входа, если доступ запрещен
             return redirect(url_for('login'))
 
+    class LampView(AdminModelView):
+        form_overrides = {
+            'main_image': FileUploadField
+        }
+
+        # Настройка FileUploadField
+        form_args = {
+            'main_image': {
+                'label': 'Upload Image',
+                'base_path': app.config['UPLOAD_FOLDER'],
+                'allowed_extensions': {'png', 'jpg', 'jpeg', 'gif'}
+            }
+        }
+
     # MUST HAVE!!!
     configure_mappers()
 
@@ -29,4 +44,4 @@ def admin_init(app, db):
     admin.add_view(AdminModelView(Category, db.session))
     admin.add_view(AdminModelView(SubCategory, db.session))
     admin.add_view(AdminModelView(SubSubCategory, db.session))
-    admin.add_view(AdminModelView(Lamp, db.session))
+    admin.add_view(LampView(Lamp, db.session))

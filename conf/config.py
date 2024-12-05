@@ -14,3 +14,4 @@ class Config:
     ADMIN_NAME = os.environ.get('ADMIN_NAME')
     ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL')
     ADMIN_PASSWD = os.environ.get('ADMIN_PASSWD')
+    UPLOAD_FOLDER = './static/img'
