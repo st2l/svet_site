@@ -1,30 +1,6 @@
-// document.querySelectorAll('.add-to-cart').forEach(button => {
-//   button.addEventListener('click', function() {
-//     const productCard = this.closest('.product-card');
-//     const productId = productCard.getAttribute('data-product-id');
-    
-//     // Запрос на добавление в корзину
-//     fetch('/add-to-cart', {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json'
-//       },
-//       body: JSON.stringify({ productId: productId })
-//     })
-//     .then(response => response.json())
-//     .then(data => {
-//       alert('Товар добавлен в корзину!');
-//       // Обработать ответ от сервера, например, обновить счетчик товаров в корзине
-//     })
-//     .catch(error => {
-//       console.error('Ошибка при добавлении в корзину:', error);
-//     });
-//   });
-// });
-
 function redirectToProductPage(productId) {
   // Редирект на страницу с детальным описанием товара
-  window.location.href = `/product/${productId}`;
+  window.location.href = `/lamp/${productId}`;
 }
 
 

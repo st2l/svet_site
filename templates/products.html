@@ -10,33 +10,35 @@
     <h2>Категории</h2>
     <ul class="products-category-list">
       {% for category in categories %}
-        <li class="products-dropdown">
-          <div class="dropdown-wrapper">
-            <a href="#" class="products-category-name">{{ category.name }}</a>
-            <div class="products-dropdown-content">
-              {% for subcategory in subcategories %}
-              {% if subcategory.category_id == category.id %}
-                <div class="dropdown-item">
-                  <img
-                    src="/static/img/{{ subcategory.image }}"
-                    alt="тут будет картинк..."
-                    class="dropdown-image"
-                  />
-                  <a href=""><h3 class="dropdown-title">{{ subcategory.name }}</h3></a>
-                  <div class="sub-category-space">
-                    {% for sub_subcategory in sub_subcategories %}
-                      {% if sub_subcategory.subcategory_id == subcategory.id %}
-                        <a href="#sub-category3" class="sub-category-link">{{ sub_subcategory.name }}</a>
-                      {% endif %}
-                    {% endfor %}
-                  </div>
-                </div>
-              {% endif %}
-              {% endfor %}
-              
+      <li class="products-dropdown">
+        <div class="dropdown-wrapper">
+          <a href="/products/{{ category.id }}" class="products-category-name"
+            >{{ category.name }}</a
+          >
+          <div class="products-dropdown-content">
+            {% for subcategory in subcategories %} {% if subcategory.category_id
+            == category.id %}
+            <div class="dropdown-item">
+
+              <a href="/products/{{ category.id }}/{{ subcategory.id }}"
+                ><h3 class="dropdown-title">{{ subcategory.name }}</h3></a
+              >
+              <div class="sub-category-space">
+                {% for sub_subcategory in sub_subcategories %} {% if
+                sub_subcategory.subcategory_id == subcategory.id and
+                sub_subcategory.name != subcategory.name %}
+                <a
+                  href="/products/{{ category.id }}/{{ subcategory.id }}/{{ sub_subcategory.id }}"
+                  class="sub-category-link"
+                  >{{ sub_subcategory.name }}</a
+                >
+                {% endif %} {% endfor %}
+              </div>
             </div>
+            {% endif %} {% endfor %}
           </div>
-        </li>
+        </div>
+      </li>
       {% endfor %}
     </ul>
   </div>
@@ -51,7 +53,7 @@
           onclick="redirectToProductPage({{ lamp.id }})"
         >
           <img
-            src="static/img/{{ lamp.main_image }}"
+            src="/static/img/{{ lamp.main_image }}"
             alt="Product Image"
             class="product-image"
           />
@@ -62,11 +64,11 @@
             Добавить в корзину
           </button>
         </div>
-      </div>
 
-      {% endfor %} {% else %}
-      <p>Пока тут пусто...</p>
-      {% endif %}
+        {% endfor %} {% else %}
+        <p>Пока тут пусто...</p>
+        {% endif %}
+      </div>
     </div>
   </div>
 </main>
