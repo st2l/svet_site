@@ -18,6 +18,7 @@ def products():
             'lamps': []
         }
     params['categories'] = categories
+    params['subcategories_names'] = [el.name for el in subcategories]
     params['subcategories'] = subcategories
     params['sub_subcategories'] = sub_subcategories
 

@@ -16,6 +16,7 @@ def products_full_choose(category_id, subcategory_id, sub_subcategory_id):
     params = {
         'lamps': lamps,
         'categories': categories,
+        'subcategories_names': [el.name for el in subcategories],
         'subcategories': subcategories,
         'sub_subcategories': sub_subcategories,
     }
