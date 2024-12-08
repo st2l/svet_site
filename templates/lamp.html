@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/products.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/lamp.css') }}" />
+
+<div class="products-container">
+    <div class="products-sidebar">
+        <h2>Категории</h2>
+        <ul class="products-category-list">
+          {% for category in categories %}
+          {% if category.name not in subcategories_names %}
+          <li class="products-dropdown">
+            <div class="dropdown-wrapper">
+              <a href="/products/{{ category.id }}" class="products-category-name">{{ category.name }}</a>
+              
+                <div class="products-dropdown-content">
+                  {% for subcategory in subcategories %} {% if subcategory.category_id
+                  == category.id and subcategory.name != category.name %}
+                  <div class="dropdown-item">
+
+                    <a href="/products/{{ category.id }}/{{ subcategory.id }}">
+                      <h3 class="dropdown-title">{{ subcategory.name }}</h3>
+                    </a>
+                    <div class="sub-category-space">
+                      {% for sub_subcategory in sub_subcategories %} {% if
+                      sub_subcategory.subcategory_id == subcategory.id and
+                      sub_subcategory.name != subcategory.name %}
+                      <a href="/products/{{ category.id }}/{{ subcategory.id }}/{{ sub_subcategory.id }}"
+                        class="sub-category-link">{{ sub_subcategory.name }}</a>
+                      {% endif %} {% endfor %}
+                    </div>
+                  </div>
+                  {% endif %} {% endfor %}
+                </div>
+              
+            </div>
+          </li>
+          {% else %}
+          <li class="">
+            <div class="dropdown-wrapper">
+              <a href="/products/{{ category.id }}" class="products-category-name">{{ category.name }}</a>
+            </div>
+          </li>
+          {% endif %}
+          {% endfor %}
+        </ul>
+    </div>
+    <div class="lamp-container">
+        <div class="lamp-details">
+            <div class="lamp-gallery">
+                <img src="/static/img/{{ lamp.main_image }}" alt="{{ lamp.name }}" class="lamp-main-image">
+                {% if lamp.extra_images %}
+                    <div class="lamp-extra-images">
+                        {% for image in lamp.extra_images %}
+                            <img src="{{ image }}" alt="{{ lamp.name }}" class="lamp-extra-image">
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="lamp-info">
+                <div class="lamp-header">
+                    <h1 class="lamp-name">{{ lamp.name }}</h1>
+                    <p class="lamp-article">Article: {{ lamp.article }}</p>
+                    <div class="lamp-price">
+                        <span>Price: ${{ lamp.price }}</span>
+                        <button class="add-to-cart-button">Add to Cart</button>
+                    </div>
+                </div>
+                <p class="lamp-description">{% if lamp.description %}{{ lamp.description }}{% else %} Lorem ipsum dolor, sit amet consectetur adipisicing elit. Necessitatibus accusamus earum iusto quae pariatur exercitationem saepe suscipit eveniet, doloribus quisquam corrupti ipsum cumque possimus obcaecati laudantium facere. Consectetur, hic sequi. {% endif %}</p>
+                <table class="lamp-specs-table">
+                    <thead>
+                        <tr>
+                            <th>Specification</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for spec, value in {
+                            'Model': lamp.model,
+                            'Article': lamp.article,
+                            'Availability': lamp.availability,
+                            'Series': lamp.series,
+                            'Style': lamp.style,
+                            'Body Color': lamp.body_color,
+                            'Shade Color': lamp.shade_color,
+                            'Body Material': lamp.body_material,
+                            'Shade Material': lamp.shade_material,
+                            'Head Shape': lamp.head_shape,
+                            'Install Type': lamp.install_type,
+                            'Mount Type': lamp.mount_type,
+                            'Bracket Count': lamp.bracket_count,
+                            'Lamp Count': lamp.lamp_count,
+                            'Socket Type': lamp.socket_type,
+                            'Lamp Type': lamp.lamp_type,
+                            'Max Power': lamp.max_power ~ 'W',
+                            'Voltage': lamp.voltage ~ 'V',
+                            'IP Protection': lamp.ip_protection,
+                            'Weight': lamp.weight ~ 'kg',
+                            'Height': lamp.height ~ 'cm',
+                            'Width': lamp.width ~ 'cm',
+                            'Diameter': lamp.diameter ~ 'cm',
+                            'Length': lamp.length ~ 'cm',
+                            'Depth': lamp.depth ~ 'cm',
+                            'Country': lamp.country,
+                            'Warranty': lamp.warranty,
+                            'Brand': lamp.brand
+                        }.items() %}
+                        <tr>
+                            <td>{{ spec }}</td>
+                            <td>{{ value }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

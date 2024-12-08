@@ -7,6 +7,7 @@ from .logout import logout
 from .products_full_choose import products_full_choose
 from .products_category_choose import products_category_choose
 from .products_subcategory_choose import products_subcategory_choose
+from .lamps import get_lamp
 
 from flask import Flask
 
@@ -41,5 +42,11 @@ def register_all_routes(app: Flask):
     app.add_url_rule(
         rule='/products/<int:category_id>/<int:subcategory_id>/<int:sub_subcategory_id>',
         view_func=products_full_choose,
+        methods=['GET']
+    )
+
+    app.add_url_rule(
+        rule='/lamp/<int:lamp_id>',
+        view_func=get_lamp,
         methods=['GET']
     )
