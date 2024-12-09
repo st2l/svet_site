@@ -45,12 +45,57 @@
     </ul>
   </div>
   <div class="products-content-wrapper">
+    <div class="pagination-nav">
+      <ul class="pagination">
+        {% if pagination.has_prev %}
+        <li class="page-item">
+          <a class="page-link" href="{{ url_for('products', page=pagination.prev_num) }}" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+          <a class="page-link" href="#" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        {% endif %}
+        {% for page_num in pagination.iter_pages() %}
+        {% if page_num %}
+        {% if page_num == pagination.page %}
+        <li class="page-item active"><a class="page-link" href="#">{{ page_num }}</a></li>
+        {% else %}
+        <li class="page-item"><a class="page-link" href="{{ url_for('products', page=page_num) }}">{{ page_num }}</a></li>
+        {% endif %}
+        {% else %}
+        <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
+        {% endif %}
+        {% endfor %}
+        {% if pagination.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="{{ url_for('products', page=pagination.next_num) }}" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+          <a class="page-link" href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
     <div class="products-content">
       <div class="products-grid">
         {% if lamps %} {% for lamp in lamps %}
 
         <div class="product-card" data-product-id="{{ lamp.id }}" onclick="redirectToProductPage({{ lamp.id }})">
+          {% if lamp.main_image %}
           <img src="/static/img/{{ lamp.main_image }}" alt="Product Image" class="product-image" />
+          {% else %}
+          <img src="/static/img/{{ lamp.photo1 }}" alt="Product Image" class="product-image" />
+          {% endif %}
           <h3 class="product-name">{{ lamp.name }}</h3>
           <p class="product-category">Категория: {{ lamp.subsubcategory }}</p>
           <p class="product-price">Цена: {{ lamp.price }} ₽</p>
@@ -63,6 +108,47 @@
         <p>Пока тут пусто...</p>
         {% endif %}
       </div>
+    </div>
+    <div class="pagination-nav">
+      <ul class="pagination">
+        {% if pagination.has_prev %}
+        <li class="page-item">
+          <a class="page-link" href="{{ url_for('products', page=pagination.prev_num) }}" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+          <a class="page-link" href="#" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        {% endif %}
+        {% for page_num in pagination.iter_pages() %}
+        {% if page_num %}
+        {% if page_num == pagination.page %}
+        <li class="page-item active"><a class="page-link" href="#">{{ page_num }}</a></li>
+        {% else %}
+        <li class="page-item"><a class="page-link" href="{{ url_for('products', page=page_num) }}">{{ page_num }}</a></li>
+        {% endif %}
+        {% else %}
+        <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
+        {% endif %}
+        {% endfor %}
+        {% if pagination.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="{{ url_for('products', page=pagination.next_num) }}" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+          <a class="page-link" href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+        {% endif %}
+      </ul>
     </div>
   </div>
 </main>

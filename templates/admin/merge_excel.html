@@ -1,0 +1,15 @@
+{% extends 'admin/master.html' %}
+
+{% block body %}
+
+
+<div style="text-align: center;">
+    <a href="/admin" style="position: absolute; top: 10px; left: 10px;">Назад</a>
+    <h2>Импорт excel файла в БД</h2>
+    <form action="/admin/merge_excel" method="post" enctype="multipart/form-data">
+        <input type="file" name="excel_file" accept=".xlsx, .xls">
+        <button type="submit">Отправить</button>
+    </form>
+</div>
+
+{% endblock %}

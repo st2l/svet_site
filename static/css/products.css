@@ -1,137 +1,173 @@
 .products-block {
-	display: flex;
+    display: flex;
     margin: 0;
-	padding-top: 1%;
+    padding-top: 1%;
     font-family: Arial, sans-serif;
-	height: auto;
-    background-color: #f0f0f0; /* Фоновый цвет страницы */
+    height: auto;
+    background-color: #f0f0f0;
 }
 
 .products-sidebar {
-    width: 250px; /* Ширина бокового меню */
-    background-color: #fff; /* Белый фон бокового меню */
+    width: 250px;
+    background-color: #fff;
     padding: 20px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Тень для эффекта "висения" */
-    border-radius: 15px; /* Закругленные углы */
-    margin-left: 20px; /* Отступ от левой границы экрана */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    margin-left: 20px;
 }
 
 .products-category-list {
-    list-style-type: none; /* Убираем маркеры списка */
+    list-style-type: none;
     padding: 0;
 }
 
 .products-category-list li {
-    margin: 10px 0; /* Отступы между пунктами списка */
-    position: relative; /* Для позиционирования выпадающего меню */
+    margin: 10px 0;
+    position: relative;
 }
 
 .dropdown-wrapper {
-    position: relative; /* Для позиционирования выпадающего меню */
+    position: relative;
 }
 
 .products-category-name {
-    text-decoration: none; /* Убираем подчеркивание у ссылок */
-    color: #333; /* Темный цвет текста */
-    background-color: #f0e68c; /* Темно-желтый цвет фона */	
-    padding: 15px; /* Увеличенные отступы для создания блока */
-    display: block; /* Делаем ссылки блочными для удобства клика */
-    border-radius: 10px; /* Закругляем углы */
-    transition: background-color 0.3s; /* Плавный переход для фона */
+    text-decoration: none;
+    color: #333;
+    background-color: #f0e68c;
+    padding: 15px;
+    display: block;
+    border-radius: 10px;
+    transition: background-color 0.3s;
 }
 
-.products-category-name {
-    background-color: #f0e68c; /* Более темный желтый при наведении */
+.products-category-name:hover {
+    background-color: #e6b800;
 }
 
 .products-dropdown-content {
-    display: none; /* Скрываем выпадающее меню по умолчанию */
-    position: absolute; /* Позиционируем его относительно родителя */
-    left: 100%; /* Сдвигаем вправо */
-    top: 0; /* Выравниваем по верхнему краю */
-    background-color: #fff; /* Белый фон для выпадающего списка */
+    display: none;
+    position: absolute;
+    left: 100%;
+    top: 0;
+    background-color: #fff;
     padding: 10px;
-	flex-direction: column; 
-	min-width: 500px;
-	min-height: 200px;
-    border-radius: 10px; /* Закругляем углы выпадающего меню */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Тень для выпадающего меню */
-    z-index: 1; /* Увеличиваем z-index для отображения поверх других элементов */
+    flex-direction: column;
+    min-width: 500px;
+    min-height: 200px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1;
 }
 
 .products-dropdown:hover .products-dropdown-content {
-    display: block; /* Показываем выпадающее меню при наведении */
+    display: block;
 }
 
 .dropdown-item {
-    display: flex; /* Используем flexbox для выравнивания изображения и заголовка */
-    align-items: center; /* Центрируем по вертикали */
-    margin-bottom: 20px; /* Отступ между элементами */
-	text-align: center; 
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    text-align: center;
 }
 
 .dropdown-image {
-    width: 100px; /* Ширина изображения */
-	max-width: 100%;
-    height: auto; /* Автоматическая высота */
-    margin-right: 10px; /* Отступ справа от изображения */
-    border-radius: 5px; /* Закругляем углы изображения */
+    width: 100px;
+    max-width: 100%;
+    height: auto;
+    margin-right: 10px;
+    border-radius: 5px;
 }
 
 .sub-category-space {
-    height: auto; /* Высота автоматически подстраивается под содержимое */
-    margin-top: 10px; /* Отступ сверху для подкатегорий */
+    height: auto;
+    margin-top: 10px;
 }
 
 .sub-category-link {
-    display: block; /* Каждая ссылка занимает всю ширину */
-    color: #B0B0B0; /* Светло-серый цвет текста */
-    text-decoration: none; /* Убираем подчеркивание */
-    margin: 5px 0; /* Отступы между ссылками */
-	font-size: 10px;
-    transition: color 0.3s; /* Плавный переход цвета */
+    display: block;
+    color: #B0B0B0;
+    text-decoration: none;
+    margin: 5px 0;
+    font-size: 10px;
+    transition: color 0.3s;
 }
 
 .sub-category-link:hover {
-    color: #A0A0A0; /* Темнее при наведении */
-    text-decoration: underline; /* Подчеркивание при наведении */
+    color: #A0A0A0;
+    text-decoration: underline;
 }
 
 .dropdown-title {
-    color: #333; /* Цвет заголовка */
-    font-size: 14px; /* Размер шрифта заголовка */
-    margin: 0; /* Убираем отступы */
-}
-
-
-.products-category-name:hover {
-    background-color: #e6b800; /* Фон при наведении на элементы выпадающего меню */
+    color: #333;
+    font-size: 14px;
+    margin: 0;
 }
 
 .products-content-wrapper {
-	padding-left: 2%;
-	min-width: 75%;
-	align-items: center;
+    padding-left: 2%;
+    min-width: 75%;
+    align-items: center;
 }
 
 .products-content {
-    padding: 20px; /* Отступы для основного контента */
-	min-width: 100%;
-	align-self: center;
-    border: 2px solid #ffcc00; /* Рамка вокруг блока контента */
-    border-radius: 15px; /* Закругляем углы рамки */
-    margin-left: 20px; /* Отступ от бокового меню */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Тень для эффекта "висения" */
-    background-color: #fff; /* Белый фон для блока контента */
+    padding: 20px;
+    min-width: 100%;
+    align-self: center;
+    border: 2px solid #ffcc00;
+    border-radius: 15px;
+    margin-left: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
 }
 
 .products-grid {
-	display: grid;
-	gap: 20px;
-	grid-template-columns: repeat(
-	  auto-fit,
-	  minmax(300px, 1fr)
-	); /* Адаптивная сетка */
-	width: 100%;
-	justify-items: center; /* Центрирование карточек по горизонтали */
-  }
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    width: 100%;
+    justify-items: center;
+}
+
+.pagination-nav {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+
+.page-item {
+    margin: 0 5px;
+}
+
+.page-link {
+    display: block;
+    padding: 10px 15px;
+    color: #333;
+    background-color: #f0e68c;
+    border: 1px solid #ffcc00;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.page-link:hover {
+    background-color: #e6b800;
+    color: #000;
+}
+
+.page-item.active .page-link {
+    background-color: #ffcc00;
+    color: #000;
+    cursor: default;
+}
+
+.page-item.disabled .page-link {
+    background-color: #f0f0f0;
+    color: #ccc;
+    cursor: not-allowed;
+}

@@ -2,24 +2,23 @@ from flask import render_template, request, redirect, url_for, flash
 from models import Lamp, Category, SubCategory, SubSubCategory
 from models import db, User
 
-
 def products():
-    
-    lamps = Lamp.query.all()
+    page = request.args.get('page', 1, type=int)
+    per_page = 4 * 5  # Number of items per page
+
+    lamps_pagination = Lamp.query.paginate(page=page, per_page=per_page, error_out=False)
+    lamps = lamps_pagination.items
     categories = Category.query.all()
     subcategories = SubCategory.query.all()
     sub_subcategories = SubSubCategory.query.all()
-    if lamps:
-        params = {
-            'lamps': lamps[:3]
-        }
-    else:
-        params = {
-            'lamps': []
-        }
-    params['categories'] = categories
-    params['subcategories_names'] = [el.name for el in subcategories]
-    params['subcategories'] = subcategories
-    params['sub_subcategories'] = sub_subcategories
+
+    params = {
+        'lamps': lamps,
+        'categories': categories,
+        'subcategories_names': [el.name for el in subcategories],
+        'subcategories': subcategories,
+        'sub_subcategories': sub_subcategories,
+        'pagination': lamps_pagination
+    }
 
     return render_template('products.html', **params)
