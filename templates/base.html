@@ -5,40 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Уличные светильники</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
-
-
 </head>
 <body>
-    <header class="site-header">
-        <div class="container">
+    <header class="site-header bg-dark text-white py-3">
+        <div class="container d-flex justify-content-between align-items-center">
             <div class="logo">
-                <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Лого">
+                <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Лого" class="img-fluid">
             </div>
             <nav class="navigation">
-                <ul>
-                    <li><a href="{{ url_for('index') }}">Главная</a></li>
-                    <li><a href="{{ url_for('products') }}">Товары</a></li>
-                    <li><a href="{{ url_for('contact') }}">Связаться с нами</a></li>
+                <ul class="nav">
+                    <li class="nav-item"><a class="nav-link text-white" href="{{ url_for('index') }}">Главная</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="{{ url_for('products') }}">Товары</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="{{ url_for('contact') }}">Связаться с нами</a></li>
                 </ul>
             </nav>
             <div class="auth-buttons">
                 {% if current_user.is_authenticated %}
-                    <!-- Если пользователь авторизован, показываем кнопку выхода -->
-                    <a href="{{ url_for('logout') }}"><button id="logout-btn">Выход</button></a>
+                    <a href="{{ url_for('logout') }}" class="btn btn-danger text-dark">Выход</a>
+                    <a href="{{ url_for('view_cart') }}" class="btn btn-warning text-dark">Посмотреть корзину</a>
                 {% else %}
-                    <!-- Если пользователь не авторизован, показываем кнопки входа и регистрации -->
-                    <a href="{{ url_for('login') }}"><button id="login-btn">Вход</button></a>
-                    <a href="{{ url_for('register') }}"><button id="register-btn">Регистрация</button></a>
+                    <a href="{{ url_for('login') }}" class="btn btn-success text-dark">Вход</a>
+                    <a href="{{ url_for('register') }}" class="btn btn-warning text-dark">Регистрация</a>
                 {% endif %}
             </div>
         </div>
     </header>
-    <main>
+    <main class="">
         {% block content %}
         {% endblock %}
     </main>
-
-
+    <footer class="bg-dark text-white py-4">
+        <div class="container text-center">
+            <p>Контакты:</p>
+            <p>Телефон: <a href="tel:+1234567890" class="text-warning">+1234567890</a></p>
+            <p>Email: <a href="mailto:info@example.com" class="text-warning">info@example.com</a></p>
+        </div>
+    </footer>
 </body>
 </html>

@@ -15,7 +15,9 @@ def get_lamp(lamp_id):
         'categories': categories,
         'subcategories_names': [el.name for el in subcategories],
         'subcategories': subcategories,
-        'sub_subcategories': sub_subcategories
+        'sub_subcategories': sub_subcategories,
+        'enumerate': enumerate,
+        'extra_images': [el for el in [lamp.photo1, lamp.photo2, lamp.photo3, lamp.photo4, lamp.photo5, lamp.photo6, lamp.photo7, lamp.photo8, lamp.photo9, lamp.photo10, lamp.photo11, lamp.photo12, lamp.photo13, lamp.photo14, lamp.photo15, lamp.photo16, lamp.photo17, lamp.photo18, lamp.photo19, lamp.photo20] if el not in [None, '']]
     }
 
     if lamp:

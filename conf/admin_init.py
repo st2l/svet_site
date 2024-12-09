@@ -4,7 +4,7 @@ from flask_login import current_user
 from flask_admin import Admin, expose, AdminIndexView
 from flask import redirect, url_for, request
 from flask_admin.form import FileUploadField
-from models import User, Category, SubCategory, SubSubCategory, Lamp
+from models import User, Category, SubCategory, SubSubCategory, Lamp, CartItem
 from flask_admin.contrib.sqla import ModelView
 import pandas as pd
 import os
@@ -381,11 +381,21 @@ def admin_init(app, db):
                 'allowed_extensions': {'png', 'jpg', 'jpeg', 'gif'}
             },
         }
+    
+    class CartView(AdminModelView):
+        column_labels = {
+            'id': 'ID',
+            'user_id': 'ID Пользователя',
+            'lamp_id': 'ID Лампы',
+            'lamp': 'Лампа',
+            'count': 'Количество',
+        }
 
     # MUST HAVE!!!
     configure_mappers()
 
     admin.add_view(AdminModelView(User, db.session))
+    admin.add_view(CartView(CartItem, db.session))
     admin.add_view(CategoryAdmin(Category, db.session))
     admin.add_view(SubCategoryAdmin(SubCategory, db.session))
     admin.add_view(SubSubCategoryAdmin(SubSubCategory, db.session))

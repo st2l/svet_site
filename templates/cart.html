@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/cart.css') }}">
+
+<div class="cartpage-container">
+    <h1 class="cartpage-title">Корзина</h1>
+    <div class="cartpage-items">
+        {% for item in cart_items %}
+        <div class="cartpage-item">
+            <a href="/lamp/{{ item.lamp.id }}" class="cartpage-item-link">
+                <img src="{{ url_for('static', filename='img/' + item.lamp.main_image) }}" alt="{{ item.lamp.name }}" class="cartpage-item-image">
+                <div class="cartpage-item-info">
+                    <h2 class="cartpage-item-name">{{ item.lamp.name }}</h2>
+                    <p class="cartpage-item-article">Артикул: {{ item.lamp.article }}</p>
+                    <p class="cartpage-item-price">Цена: {{ item.lamp.price }} руб.</p>
+                    <p class="cartpage-item-quantity">Количество: {{ item.amount }}</p>
+                    <p class="cartpage-item-total-price">Общая цена: {{ item.amount * item.lamp.price }} руб.</p>
+                </div>
+            </a>
+            <div class="cartpage-item-actions">
+                <form action="{{ url_for('decrease_item_route', item_id=item.id) }}" method="post">
+                    <button type="submit" class="cartpage-item-decrease">Убрать один товар</button>
+                </form>
+                <form action="{{ url_for('increase_item_route', item_id=item.id) }}" method="post">
+                    <button type="submit" class="cartpage-item-increase">Добавить еще один</button>
+                </form>
+                <form action="{{ url_for('delete_item_route', item_id=item.id) }}" method="post">
+                    <button type="submit" class="cartpage-item-delete">Удалить</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="cartpage-submit">
+        <button class="cartpage-submit-btn">Отправить</button>
+    </div>
+</div>
+{% endblock %}

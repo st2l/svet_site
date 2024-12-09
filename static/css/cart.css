@@ -1,0 +1,107 @@
+/* Add this to your css/cart.css file */
+.cartpage-container {
+    background-color: #fff;
+    color: #000;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 1200px; /* Increased width */
+    margin: 0 auto;
+}
+
+.cartpage-title {
+    text-align: center;
+    color: #0e0d08;
+}
+
+.cartpage-items {
+    margin-top: 20px;
+}
+
+.cartpage-item {
+    border-bottom: 1px solid #FFD700;
+    padding: 20px 0; /* Increased padding */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cartpage-item-link {
+    display: flex;
+    text-decoration: none;
+    color: inherit;
+    width: 100%; /* Ensure the link takes full width */
+}
+
+.cartpage-item-image {
+    width: 350px; /* Increased image width */
+    height: auto;
+    margin-right: 150px;
+    object-fit: cover; /* Ensure the image maintains aspect ratio */
+}
+
+.cartpage-item-info {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Allow the info section to take remaining space */
+}
+
+.cartpage-item-name {
+    font-size: 1.5em; /* Increased font size */
+    color: #0e0d08;
+}
+
+.cartpage-item-article {
+    font-size: 1em; /* Decreased font size */
+    color: #808080; /* Changed color to grey */
+}
+
+.cartpage-item-price,
+.cartpage-item-quantity,
+.cartpage-item-total-price {
+    font-size: 1.2em; /* Increased font size */
+    color: #0e0d08;
+}
+
+.cartpage-item-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cartpage-item-decrease,
+.cartpage-item-increase,
+.cartpage-item-delete {
+    background-color: #FFD700;
+    color: #000;
+    border: none;
+    padding: 10px 20px; /* Increased padding */
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 5px 0;
+}
+
+.cartpage-item-decrease:hover,
+.cartpage-item-increase:hover,
+.cartpage-item-delete:hover {
+    background-color: #FFC700;
+}
+
+.cartpage-submit {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.cartpage-submit-btn {
+    background-color: #FFD700;
+    color: #000;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.cartpage-submit-btn:hover {
+    background-color: #FFC700;
+}

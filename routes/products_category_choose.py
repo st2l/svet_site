@@ -22,7 +22,8 @@ def products_category_choose(category_id):
         'subcategories_names': [el.name for el in subcategories],
         'subcategories': subcategories,
         'sub_subcategories': sub_subcategories,
-        'pagination': lamps_pagination
+        'pagination': lamps_pagination,
+        'chosen_cat': category_id
     }
 
-    return render_template('products.html', **params)
+    return render_template('products_category.html', **params)

@@ -8,6 +8,8 @@ from .products_full_choose import products_full_choose
 from .products_category_choose import products_category_choose
 from .products_subcategory_choose import products_subcategory_choose
 from .lamps import get_lamp
+from .add_to_cart import add_to_cart
+from .cart import view_cart, increase_item,  decrease_item, delete_item
 
 from flask import Flask
 
@@ -50,3 +52,27 @@ def register_all_routes(app: Flask):
         view_func=get_lamp,
         methods=['GET']
     )
+
+    app.add_url_rule(
+        rule='/add_to_cart',
+        view_func=add_to_cart,
+        methods=['POST']
+    )
+
+    app.add_url_rule(
+        rule='/cart',
+        view_func=view_cart,    
+        methods=['GET']
+    )
+
+    @app.route('/cart/increase/<int:item_id>', methods=['POST'])
+    def increase_item_route(item_id):
+        return increase_item(item_id)
+
+    @app.route('/cart/decrease/<int:item_id>', methods=['POST'])
+    def decrease_item_route(item_id):
+        return decrease_item(item_id)
+
+    @app.route('/cart/delete/<int:item_id>', methods=['POST'])
+    def delete_item_route(item_id):
+        return delete_item(item_id)

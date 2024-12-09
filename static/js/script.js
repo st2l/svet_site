@@ -8,7 +8,7 @@ function addToCart(event, productId) {
   // Отменяем действие по умолчанию (редирект)
   event.stopPropagation(); // Останавливаем всплытие события
 
-  fetch('/add-to-cart', {
+  fetch('/add_to_cart', {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json'
@@ -17,7 +17,7 @@ function addToCart(event, productId) {
   })
   .then(response => response.json())
   .then(data => {
-      alert('Товар добавлен в корзину!');
+      // alert('Товар добавлен в корзину!');
       // Обработать ответ от сервера, например, обновить счетчик товаров в корзине
   })
   .catch(error => {
