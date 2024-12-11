@@ -1,52 +1,56 @@
 <!DOCTYPE html>
 <html lang="zxx">
+
 <head>
 	<!-- Meta Tag -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name='copyright' content=''>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<!-- Title Tag  -->
-    <title>Eshop - eCommerce HTML5 Template.</title>
+	<title>Eshop - eCommerce HTML5 Template.</title>
 	<!-- Favicon -->
 	<link rel="icon" type="image/png" href="images/favicon.png">
 	<!-- Web Font -->
-	<link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
-	
+	<link
+		href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
+		rel="stylesheet">
+
 	<!-- StyleSheet -->
-	
+
 	<!-- Bootstrap -->
 	<link rel="stylesheet" href="/static/css/bootstrap.css">
 	<!-- Magnific Popup -->
-    <link rel="stylesheet" href="/static/css/magnific-popup.min.css">
+	<link rel="stylesheet" href="/static/css/magnific-popup.min.css">
 	<!-- Font Awesome -->
-    <link rel="stylesheet" href="/static/css/font-awesome.css">
+	<link rel="stylesheet" href="/static/css/font-awesome.css">
 	<!-- Fancybox -->
 	<link rel="stylesheet" href="/static/css/jquery.fancybox.min.css">
 	<!-- Themify Icons -->
-    <link rel="stylesheet" href="/static/css/themify-icons.css">
+	<link rel="stylesheet" href="/static/css/themify-icons.css">
 	<!-- Nice Select CSS -->
-    <link rel="stylesheet" href="/static/css/niceselect.css">
+	<link rel="stylesheet" href="/static/css/niceselect.css">
 	<!-- Animate CSS -->
-    <link rel="stylesheet" href="/static/css/animate.css">
+	<link rel="stylesheet" href="/static/css/animate.css">
 	<!-- Flex Slider CSS -->
-    <link rel="stylesheet" href="/static/css/flex-slider.min.css">
+	<link rel="stylesheet" href="/static/css/flex-slider.min.css">
 	<!-- Owl Carousel -->
-    <link rel="stylesheet" href="/static/css/owl-carousel.css">
+	<link rel="stylesheet" href="/static/css/owl-carousel.css">
 	<!-- Slicknav -->
-    <link rel="stylesheet" href="/static/css/slicknav.min.css">
-	
+	<link rel="stylesheet" href="/static/css/slicknav.min.css">
+
 	<!-- Eshop StyleSheet -->
 	<link rel="stylesheet" href="/static/css/reset.css">
 	<link rel="stylesheet" href="/static/css/style.css">
-    <link rel="stylesheet" href="/static/css/responsive.css">
+	<link rel="stylesheet" href="/static/css/responsive.css">
 
-	
-	
+
+
 </head>
+
 <body class="js">
-	
+
 	<!-- Preloader -->
 	<div class="preloader">
 		<div class="preloader-inner">
@@ -57,8 +61,8 @@
 		</div>
 	</div>
 	<!-- End Preloader -->
-	
-	
+
+
 	<!-- Header -->
 	<header class="header shop">
 		<!-- Topbar -->
@@ -120,15 +124,19 @@
 					</div>
 					<div class="col-lg-8 col-md-7 col-12">
 						<div class="search-bar-top">
+							
 							<div class="search-bar">
-								<select style="width: auto;">
-										<option>Название</option>
-										<option>Артикул</option>
-										<option>Описание</option>
-								</select>
-								<form>
-									<input name="search" placeholder="Найти товар можно тут..." type="search">
-									<button class="btnn"><i class="ti-search"></i></button>
+
+								<form action="/search" method="POST">
+
+									<select name="search_option" style="width: auto;">
+										<option value="name">Название</option>
+										<option value="article">Артикул</option>
+										<option value="description">Описание</option>
+									</select>
+
+									<input name="search" placeholder="Найти товары можно тут" type="search">
+									<button type="submit" class="btnn"><i class="ti-search"></i></button>
 								</form>
 							</div>
 						</div>
@@ -137,10 +145,12 @@
 						<div class="right-bar">
 							<!-- Search Form -->
 							<div class="sinlge-bar">
-								<a href="/profile" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
+								<a href="/profile" class="single-icon"><i class="fa fa-user-circle-o"
+										aria-hidden="true"></i></a>
 							</div>
 							<div class="sinlge-bar shopping">
-								<a href="/cart" class="single-icon"><i class="ti-bag"></i> <span class="total-count">{{ len_cart_items }}</span></a>
+								<a href="/cart" class="single-icon"><i class="ti-bag"></i> <span class="total-count">{{
+										len_cart_items }}</span></a>
 								<!-- Shopping Item -->
 								<div class="shopping-item">
 									{% if current_user.is_authenticated %}
@@ -149,14 +159,17 @@
 										<a href="/cart">Посмотреть корзину</a>
 									</div>
 									<ul class="shopping-list">
-										{% for item in cart_items %}	
+										{% for item in cart_items %}
 										<li>
-											<a href="/cart/decrease/{{ item.id }}" class="remove" title="Удалить товар"><i class="fa fa-remove"></i></a>
-											<a class="cart-img" href="#"><img src="/static/img/{{ item.lamp.main_image }}" alt="#"></a>
+											<a href="/cart/decrease/{{ item.id }}" class="remove"
+												title="Удалить товар"><i class="fa fa-remove"></i></a>
+											<a class="cart-img" href="#"><img
+													src="/static/img/{{ item.lamp.main_image }}" alt="#"></a>
 											<h4><a href="/lamp/{{ item.lamp.id }}">{{ item.name }}</a></h4>
-											<p class="quantity">{{ item.amount }}x - <span class="amount">{{ item.lamp.price }} руб.</span></p>
+											<p class="quantity">{{ item.amount }}x - <span class="amount">{{
+													item.lamp.price }} руб.</span></p>
 										</li>
-										
+
 										{% endfor %}
 									</ul>
 									<div class="bottom">
@@ -198,62 +211,66 @@
 								.all-category:hover .main-category {
 									display: block;
 								}
+
 								.main-category {
 									display: none;
 								}
 							</style>
 							<div class="all-category">
-								<h3 class="cat-heading"><i class="fa fa-bars" aria-hidden="false"></i>Каталог</h3>								
+								<h3 class="cat-heading"><i class="fa fa-bars" aria-hidden="false"></i>Каталог</h3>
 								<ul class="main-category">
-								{% for category in categories %}
-									
-									<li class="main-mega"><a href="/products/{{ category.id }}">{{ category.name }} <i class="fa fa-angle-right" aria-hidden="true"></i></a>
-										
+									{% for category in categories %}
+
+									<li class="main-mega"><a href="/products/{{ category.id }}">{{ category.name }} <i
+												class="fa fa-angle-right" aria-hidden="true"></i></a>
+
 										<ul class="mega-menu">
 											{% for subcategory in subcategories %}
 											{% if subcategory.category_id == category.id %}
 
-												<li class="single-menu">
-													<a href="/products/{{ category.id }}/{{ subcategory.id }}" class="title-link">{{ subcategory.name }}</a>
-													<div class="inner-link">
-														{% for sub_subcategory in sub_subcategories %}
-														{% if sub_subcategory.subcategory_id == subcategory.id %}
-														<a href="/products/{{ category.id }}/{{ subcategory.id }}/{{ sub_subcategory.id }}">{{sub_subcategory.name}}</a>
-														{% endif %}
-														{% endfor %}
-													</div>
-												</li>
+											<li class="single-menu">
+												<a href="/products/{{ category.id }}/{{ subcategory.id }}"
+													class="title-link">{{ subcategory.name }}</a>
+												<div class="inner-link">
+													{% for sub_subcategory in sub_subcategories %}
+													{% if sub_subcategory.subcategory_id == subcategory.id %}
+													<a
+														href="/products/{{ category.id }}/{{ subcategory.id }}/{{ sub_subcategory.id }}">{{sub_subcategory.name}}</a>
+													{% endif %}
+													{% endfor %}
+												</div>
+											</li>
 											{% endif %}
 											{% endfor %}
 										</ul>
 									</li>
-								{% endfor %}
+									{% endfor %}
 
 								</ul>
-							
+
 							</div>
 						</div>
 						<div class="col-lg-9 col-12">
 							<div class="menu-area">
 								<!-- Main Menu -->
 								<nav class="navbar navbar-expand-lg">
-									<div class="navbar-collapse">	
-										<div class="nav-inner">	
+									<div class="navbar-collapse">
+										<div class="nav-inner">
 											<ul class="nav main-menu menu navbar-nav">
-													<li class="active"><a href="/">Главная</a></li>
-													<li><a href="/products">Товары</a></li>
-													<li><a href="#">Купить<i class="ti-angle-down"></i></a>
-														<ul class="dropdown">
-															<li><a href="/cart">Корзина</a></li>
-															<li><a href="/checkout">Оформить заказ</a></li>
-														</ul>
-													</li>
-													<li><a href="/contact">Связаться с нами</a></li>
-												</ul>
+												<li class="active"><a href="/">Главная</a></li>
+												<li><a href="/products">Товары</a></li>
+												<li><a href="#">Купить<i class="ti-angle-down"></i></a>
+													<ul class="dropdown">
+														<li><a href="/cart">Корзина</a></li>
+														<li><a href="/checkout">Оформить заказ</a></li>
+													</ul>
+												</li>
+												<li><a href="/contact">Связаться с нами</a></li>
+											</ul>
 										</div>
 									</div>
 								</nav>
-								<!--/ End Main Menu -->	
+								<!--/ End Main Menu -->
 							</div>
 						</div>
 					</div>
@@ -263,16 +280,16 @@
 		<!--/ End Header Inner -->
 	</header>
 	<!--/ End Header -->
-    {% block content %}
+	{% block content %}
 
-    {% endblock %}
+	{% endblock %}
 
 
-    <!-- Jquery -->
-    <script src="/static/js/script.js"></script>
+	<!-- Jquery -->
+	<script src="/static/js/script.js"></script>
 
-    <script src="/static/js/jquery.min.js"></script>
-    <script src="/static/js/jquery-migrate-3.0.0.js"></script>
+	<script src="/static/js/jquery.min.js"></script>
+	<script src="/static/js/jquery-migrate-3.0.0.js"></script>
 	<script src="/static/js/jquery-ui.min.js"></script>
 	<!-- Popper JS -->
 	<script src="/static/js/popper.min.js"></script>
@@ -303,4 +320,5 @@
 	<!-- Active JS -->
 	<script src="/static/js/active.js"></script>
 </body>
+
 </html>

@@ -691,7 +691,7 @@ Version:1.0
 .header.shop .search-bar form {
 	display: inline-block;
 	float: left;
-	width: 260px;
+	width: 480px;
 }
 .header.shop .search-bar input {
 	height: 48px;

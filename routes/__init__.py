@@ -11,6 +11,7 @@ from .lamps import get_lamp
 from .add_to_cart import add_to_cart
 from .cart import view_cart, increase_item,  decrease_item, delete_item
 from .checkout import checkout
+from .search import search
 
 from helpers import filter_params
 
@@ -65,7 +66,7 @@ def register_all_routes(app: Flask):
 
     app.add_url_rule(
         rule='/cart',
-        view_func=view_cart,    
+        view_func=view_cart,
         methods=['GET']
     )
 
@@ -85,4 +86,7 @@ def register_all_routes(app: Flask):
     @app.route('/checkout', methods=['GET', 'POST'])
     def checkout_route():
         return checkout()
-    
+
+    @app.route('/search', methods=['GET', 'POST'])
+    def search_route():
+        return search()
