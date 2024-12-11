@@ -1,25 +1,19 @@
 from flask import render_template, redirect, url_for, request
 from flask_login import current_user
 from models import db, User, CartItem, Lamp
+from helpers import filter_params
+
 
 def view_cart():
     if not current_user.is_authenticated:
         return "User not logged in", 401
 
-    user = User.query.get(current_user.id)
     if not user:
         return "User not found", 404
 
-    cart_items = CartItem.query.filter_by(user_id=current_user.id).all()
-    lamp_ids = [item.lamp_id for item in cart_items]
-    lamps = Lamp.query.filter(Lamp.id.in_(lamp_ids)).all()
+    params = filter_params()
+    return render_template('cart.html', **params)
 
-    full = sum(item.amount * item.lamp.price for item in cart_items)
-
-    for item in cart_items:
-        item.lamp = next((lamp for lamp in lamps if lamp.id == item.lamp_id), None)
-
-    return render_template('cart.html', user=user, cart_items=cart_items, full_price=full)
 
 def increase_item(item_id):
     if not current_user.is_authenticated:
@@ -31,6 +25,7 @@ def increase_item(item_id):
         db.session.commit()
 
     return redirect(url_for('view_cart'))
+
 
 def decrease_item(item_id):
     if not current_user.is_authenticated:
@@ -45,6 +40,7 @@ def decrease_item(item_id):
         db.session.commit()
 
     return redirect(url_for('view_cart'))
+
 
 def delete_item(item_id):
     if not current_user.is_authenticated:

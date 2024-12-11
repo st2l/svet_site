@@ -12,6 +12,8 @@ from .add_to_cart import add_to_cart
 from .cart import view_cart, increase_item,  decrease_item, delete_item
 from .checkout import checkout
 
+from helpers import filter_params
+
 from flask import Flask
 from flask_login import login_required
 
@@ -79,7 +81,7 @@ def register_all_routes(app: Flask):
     def delete_item_route(item_id):
         return delete_item(item_id)
 
-    @login_required 
+    @login_required
     @app.route('/checkout', methods=['GET', 'POST'])
     def checkout_route():
         return checkout()

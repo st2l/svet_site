@@ -1,6 +1,7 @@
 from flask import render_template, request, redirect, url_for, flash
 from models import db, User
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
+from helpers import filter_params
 
 
 def login():
@@ -24,4 +25,4 @@ def login():
         return redirect(url_for('login'))
 
     else:
-        return render_template('login.html')
+        return render_template('login.html', **filter_params())
