@@ -10,6 +10,12 @@ def add_to_cart(lamp_id):
     if not current_user.is_authenticated:
         return redirect(url_for('login'))
 
+    existed_crt_item = CartItem.query.filter_by(
+        user_id=current_user.id, lamp_id=lamp_id).first()
+    
+    if existed_crt_item:
+        return redirect(f'/cart/increase/{existed_crt_item.id}')
+
     cart_item = CartItem(user_id=current_user.id, lamp_id=lamp_id)
     db.session.add(cart_item)
     db.session.commit()

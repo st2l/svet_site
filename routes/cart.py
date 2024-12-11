@@ -8,9 +8,6 @@ def view_cart():
     if not current_user.is_authenticated:
         return "User not logged in", 401
 
-    if not user:
-        return "User not found", 404
-
     params = filter_params()
     return render_template('cart.html', **params)
 
