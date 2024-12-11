@@ -1,157 +1,214 @@
-{% extends "base.html" %} {% block content %}
+{% extends 'header.html' %}
+{% block content %}
 
-<link rel="stylesheet" href="{{ url_for('static', filename='css/products.css') }}" />
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
-<main class="container-fluid">
-  <div class="row">
-    <div class="col-md-3">
-      <h2>Категории</h2>
-      <ul class="list-group">
-        {% for category in categories %}
-        {% if category.name not in subcategories_names %}
-        <li class="list-group-item products-dropdown">
-          <div class="dropdown-wrapper">
-            <a href="/products/{{ category.id }}" class="products-category-name d-block p-2">{{ category.name }}</a>
-            <div class="products-dropdown-content">
-              {% for subcategory in subcategories %} {% if subcategory.category_id == category.id and subcategory.name != category.name %}
-              <div class="dropdown-item">
-                <a class="products-subcategory-name" href="/products/{{ category.id }}/{{ subcategory.id }}">
-                  <h3 class="dropdown-title">{{ subcategory.name }}</h3>
-                </a>
-                <div class="sub-category-space">
-                  {% for sub_subcategory in sub_subcategories %} {% if sub_subcategory.subcategory_id == subcategory.id and sub_subcategory.name != subcategory.name %}
-                  <a href="/products/{{ category.id }}/{{ subcategory.id }}/{{ sub_subcategory.id }}" class="sub-category-link d-block">{{ sub_subcategory.name }}</a>
-                  {% endif %} {% endfor %}
+    <!-- Start Product Area -->
+    <div class="product-area section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section-title">
+                        <h2>Все товары</h2>
+                    </div>
                 </div>
-              </div>
-              {% endif %} {% endfor %}
             </div>
-          </div>
-        </li>
-        {% else %}
-        <li class="list-group-item">
-          <div class="dropdown-wrapper">
-            <a href="/products/{{ category.id }}" class="products-category-name d-block p-2">{{ category.name }}</a>
-          </div>
-        </li>
-        {% endif %}
-        {% endfor %}
-      </ul>
-    </div>
-    <div class="col-md-9">
-      <div class="pagination-nav">
-        <ul class="pagination justify-content-center">
-          {% if pagination.has_prev %}
-          <li class="page-item">
-            <a class="page-link" href="/products/{{ chosen_cat }}?page={{ pagination.prev_num }}" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-          {% else %}
-          <li class="page-item disabled">
-            <a class="page-link" href="#" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-          {% endif %}
-          {% for page_num in pagination.iter_pages() %}
-          {% if page_num %}
-          {% if page_num == pagination.page %}
-          <li class="page-item active"><a class="page-link" href="#">{{ page_num }}</a></li>
-          {% else %}
-          <li class="page-item"><a class="page-link" href="/products/{{ chosen_cat }}?page={{ page_num }}">{{ page_num }}</a></li>
-          {% endif %}
-          {% else %}
-          <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
-          {% endif %}
-          {% endfor %}
-          {% if pagination.has_next %}
-          <li class="page-item">
-            <a class="page-link" href="/products/{{ chosen_cat }}?page={{ pagination.next_num }}" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
-          {% else %}
-          <li class="page-item disabled">
-            <a class="page-link" href="#" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
-          {% endif %}
-        </ul>
-      </div>
-      <div class="products-content">
-        <div class="row">
-          {% if lamps %} {% for lamp in lamps %}
-          <div class="col-md-4 mb-4">
-            <div class="card h-100" data-product-id="{{ lamp.id }}" onclick="redirectToProductPage({{ lamp.id }})">
-              {% if lamp.main_image %}
-              <img src="/static/img/{{ lamp.main_image }}" alt="Product Image" class="card-img-top" />
-              {% else %}
-              <img src="/static/img/{{ lamp.photo1 }}" alt="Product Image" class="card-img-top" />
-              {% endif %}
-              <div class="card-body">
-                <h5 class="card-title">{{ lamp.name }}</h5>
-                <p class="card-text">Категория: {{ lamp.subsubcategory }}</p>
-                <p class="card-text">Цена: {{ lamp.price }} ₽</p>
-                <button class="btn btn-warning" onclick="addToCart(event, {{ lamp.id }})">Добавить в корзину</button>
-              </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="product-info">
+                        <div class="nav-main">
+                            <!-- Tab Nav -->
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                {% for subcategory in subcategories %}
+                                {% if subcategory.category_id == chosen_cat %}
+                                    <li class="nav-item"><a class="nav-link" href="/products/{{ chosen_cat }}/{{ subcategory.id }}" role="tab">{{subcategory.name}}</a></li>
+                                {% endif %}
+                                {% endfor %}
+                            </ul>
+                            <!--/ End Tab Nav -->
+                        </div>
+                        <div class="tab-content" id="myTabContent">
+                            <!-- Start Single Tab -->
+                            <div class="tab-pane fade show active" id="" role="tabpanel">
+                                <div class="tab-single">
+                                    <div class="row">
+                                        {% for lamp in lamps %}
+                                        <div class="col-xl-3 col-lg-4 col-md-4 col-12">
+                                            <div class="single-product">
+                                                <div class="product-img">
+                                                    <a href="/lamp/{{ lamp.id }}">
+                                                        {% if lamp.main_image %}
+                                                            <img class="default-img" src="/static/img/{{ lamp.main_image }}" alt="#">
+                                                            <img class="hover-img" src="/static/img/{{ lamp.photo1 }}" alt="#">
+                                                        {% else %}
+                                                            <img class="default-img" src="/static/img/{{ lamp.photo1 }}" alt="#">
+                                                            <img class="hover-img" src="/static/img/{{ lamp.photo2 }}" alt="#">
+                                                        {% endif %}
+                                                    </a>
+                                                    <div class="button-head">
+                                                        <div class="product-action-2">
+                                                            <a title="Добавить в корзину" href="/add_to_cart/{{ lamp.id }}">Добавить в корзину</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="product-content">
+                                                    <h3><a href="/lamp/{{ lamp.id }}">{{ lamp.name }}</a></h3>
+                                                    <div class="product-price">
+                                                        <span>{{ lamp.price }} руб.</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/ End Single Tab -->
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-          {% endfor %} {% else %}
-          <p>Пока тут пусто...</p>
-          {% endif %}
         </div>
-      </div>
-      <div class="pagination-nav">
-        <ul class="pagination justify-content-center">
-          {% if pagination.has_prev %}
-          <li class="page-item">
-            <a class="page-link" href="/products/{{ chosen_cat }}?page={{ pagination.prev_num }}" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-          {% else %}
-          <li class="page-item disabled">
-            <a class="page-link" href="#" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-          {% endif %}
-          {% for page_num in pagination.iter_pages() %}
-          {% if page_num %}
-          {% if page_num == pagination.page %}
-          <li class="page-item active"><a class="page-link" href="#">{{ page_num }}</a></li>
-          {% else %}
-          <li class="page-item"><a class="page-link" href="/products/{{ chosen_cat }}?page={{ page_num }}">{{ page_num }}</a></li>
-          {% endif %}
-          {% else %}
-          <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
-          {% endif %}
-          {% endfor %}
-          {% if pagination.has_next %}
-          <li class="page-item">
-            <a class="page-link" href="/products/{{ chosen_cat }}?page={{ pagination.next_num }}" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
-          {% else %}
-          <li class="page-item disabled">
-            <a class="page-link" href="#" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
-          {% endif %}
-        </ul>
-      </div>
-    </div>
-  </div>
-</main>
+</div>
+<!-- End Product Area -->
 
-<script src="{{ url_for('static', filename='js/products.js') }}"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<style>
+    .modal-4 a {
+        margin: 0 5px;
+        padding: 0;
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        -moz-border-radius: 100%;
+        -webkit-border-radius: 100%;
+        border-radius: 100%;
+        text-align: center;
+        background-color: #F7C12C;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        font-family: arial;
+
+    }
+
+    .modal-4 a.prev {
+        -moz-border-radius: 50px 0 0 50px;
+        -webkit-border-radius: 50px;
+        border-radius: 50px 0 0 50px;
+        width: 100px;
+        text-align: center;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        font-family: arial;
+    }
+
+    .modal-4 a.next {
+        -moz-border-radius: 0 50px 50px 0;
+        -webkit-border-radius: 0;
+        border-radius: 0 50px 50px 0;
+        width: 100px;
+        text-align: center;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        font-family: arial;
+    }
+
+    .modal-4 a:hover {
+        background-color: #FFA500;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        text-align: center;
+        -webkit-box-sizing: border-box;
+        font-family: arial;
+    }
+
+    .modal-4 a.active,
+    .modal-4 a:active {
+        background-color: #FFA100;
+        box-sizing: border-box;
+        text-align: center;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        font-family: arial;
+    }
+
+    .pagination {
+        list-style: none;
+        display: inline-block;
+        padding: 0;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .pagination li {
+        display: inline;
+        text-align: center;
+        text-align: center;
+    }
+
+    .pagination a {
+        float: left;
+        display: block;
+        font-size: 14px;
+        text-decoration: none;
+        padding: 5px 12px;
+        color: #fff;
+        margin-left: -1px;
+        border: 1px solid transparent;
+        line-height: 1.5;
+        text-align: center;
+    }
+
+    .pagination a.active {
+        cursor: default;
+        text-align: center;
+    }
+
+    .pagination a:active {
+        outline: none;
+        text-align: center;
+    }
+
+    .pagination-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+<link class="cssdeck" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+<div class="pagination-container">
+    <div class="row">
+        <div class="col-12">
+            <ul class="pagination modal-4">
+                {% if pagination.has_prev %}
+                <li><a href="/products/{{ chosen_cat }}?page={{ pagination.prev_num }}" class="prev">
+                        <i class="fa fa-chevron-left"></i>
+                        Предудыщий
+                    </a>
+                </li>
+                {% endif %}
+                {% for page_num in pagination.iter_pages() %}
+                {% if page_num %}
+                {% if page_num == pagination.page %}
+                <li><a href="/products/{{ chosen_cat }}?page={{ page_num }}" class="active">{{ page_num }}</a></li>
+                {% else %}
+                <li><a href="/products/{{ chosen_cat }}?page={{ page_num }}">{{ page_num }}</a></li>
+                {% endif %}
+                
+                {% endif %}
+
+                {% endfor %}
+                {% if pagination.has_next %}
+                <li><a href="/products/{{ chosen_cat }}?page={{ pagination.next_num }}" class="next"> Следующий
+                        <i class="fa fa-chevron-right"></i>
+                    </a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

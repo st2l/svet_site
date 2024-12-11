@@ -14,10 +14,12 @@ def view_cart():
     lamp_ids = [item.lamp_id for item in cart_items]
     lamps = Lamp.query.filter(Lamp.id.in_(lamp_ids)).all()
 
+    full = sum(item.amount * item.lamp.price for item in cart_items)
+
     for item in cart_items:
         item.lamp = next((lamp for lamp in lamps if lamp.id == item.lamp_id), None)
 
-    return render_template('cart.html', user=user, cart_items=cart_items)
+    return render_template('cart.html', user=user, cart_items=cart_items, full_price=full)
 
 def increase_item(item_id):
     if not current_user.is_authenticated:

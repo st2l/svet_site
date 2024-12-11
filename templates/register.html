@@ -1,44 +1,28 @@
-{% extends "base.html" %}
-
+{% extends 'header.html' %}
 {% block content %}
-
-<!-- Подключаем стили для формы -->
-<link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}">
-
-<!-- Контейнер для формы регистрации -->
-<div class="register-form-container">
-    <div class="form-card">
-        <h2>Регистрация</h2>
-        <form method="POST" action="{{ url_for('register') }}">
-
-            <!-- Выводим ошибки, если они есть -->
-            {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <div class="alert-container">
-                    {% for category, message in messages %}
-                        <div class="alert alert-{{ category }}">{{ message }}</div>
-                    {% endfor %}
-                </div>
-            {% endif %}
-            {% endwith %}
-
-            <!-- Поле для имени пользователя -->
-            <div class="form-group">
-                <label for="username">Имя пользователя</label>
-                <input type="text" name="username" id="username" required>
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="border p-4" style="width: 100%; max-width: 400px;">
+        <form action="/register" method="POST">
+            <!-- Username input -->
+            <div data-mdb-input-init class="form-outline mb-4">
+                <input type="" id="form2Example1" class="form-control" name="username" />
+                <label class="form-label" for="form2Example1">Ваш никнейм (может быть любой)</label>
             </div>
-            <!-- Поле для email -->
-            <div class="form-group">
-                <label for="email">Электронная почта</label>
-                <input type="email" name="email" id="email" required>
+
+            <!-- Email input -->
+            <div data-mdb-input-init class="form-outline mb-4">
+                <input type="email" id="form2Example1" class="form-control" name="email" />
+                <label class="form-label" for="form2Example1">Эл. адрес почты</label>
             </div>
-            <!-- Поле для пароля -->
-            <div class="form-group">
-                <label for="password">Пароль</label>
-                <input type="password" name="password" id="password" required>
+
+            <!-- Password input -->
+            <div data-mdb-input-init class="form-outline mb-4">
+                <input type="password" id="form2Example2" class="form-control" name="password" />
+                <label class="form-label" for="form2Example2">Пароль</label>
             </div>
-            <!-- Кнопка отправки формы -->
-            <button type="submit" class="btn">Зарегистрироваться</button>
+
+            <!-- Submit button -->
+            <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4">Зарегистрироваться</button>
         </form>
     </div>
 </div>

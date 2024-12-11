@@ -1,10 +1,8 @@
-from flask import request, jsonify, url_for
+from flask import request, redirect, url_for
 from models import db, CartItem
 from flask_login import current_user
 
-def add_to_cart():
-    data = request.get_json()
-    lamp_id = data.get('productId')
+def add_to_cart(lamp_id):
 
     if not lamp_id:
         return jsonify({'error': 'Invalid product ID'}), 400
@@ -16,4 +14,4 @@ def add_to_cart():
     db.session.add(cart_item)
     db.session.commit()
 
-    return jsonify({'message': 'Товар добавлен в корзину!'}), 200
+    return redirect(url_for('view_cart'))

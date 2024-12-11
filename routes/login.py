@@ -6,10 +6,10 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 def login():
     if request.method == 'POST':
 
-        username = request.form.get('username')
+        email = request.form.get('email')
         password = request.form.get('password')
 
-        usr = User.query.filter_by(username=username).first()
+        usr = User.query.filter_by(email=email).first()
         if usr:
             # Проверка пароля
             if usr.check_password(password):

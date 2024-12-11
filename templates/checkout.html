@@ -1,0 +1,163 @@
+{% extends 'header.html' %}
+{% block content %}
+
+<!-- Breadcrumbs -->
+<div class="breadcrumbs">
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<div class="bread-inner">
+					<ul class="bread-list">
+						<li><a href="/">Главная<i class="ti-arrow-right"></i></a></li>
+						<li class="active"><a href="/checkout">Оформление заказа</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End Breadcrumbs -->
+
+<!-- Start Checkout -->
+<section class="shop checkout section">
+	<form class="form" method="post" action="/checkout">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-12">
+					<div class="checkout-form">
+						<h2>Заполните пожалуйста форму</h2>
+						<p>Чтобы мы смогли быстро связаться с вами!</p>
+						<!-- Form -->
+						<div class="row">
+							<div class="col-lg-6 col-md-6 col-12">
+								<div class="form-group">
+									<label>Ваше имя<span>*</span></label>
+									<input type="text" name="first_name" placeholder="" required="required">
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-12">
+								<div class="form-group">
+									<label>Ваша фамилия<span>*</span></label>
+									<input type="text" name="last_name" placeholder="" required="required">
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-12">
+								<div class="form-group">
+									<label>Номер телефона<span>*</span></label>
+									<input type="number" name="phone_number" placeholder="" required="required">
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-12">
+								<div class="form-group">
+									<label>Адрес куда надо доставить<span>*</span></label>
+									<input type="text" name="address" placeholder="" required="required">
+								</div>
+							</div>
+						</div>
+
+						<!--/ End Form -->
+					</div>
+				</div>
+				<div class="col-lg-4 col-12">
+					<div class="order-details">
+						<!-- Order Widget -->
+						<div class="single-widget">
+							<h2>Сумма корзины</h2>
+							<div class="content">
+								<ul>
+									<li class="last">Сумма: <span>{{ full_price }} руб.</span></li>
+								</ul>
+							</div>
+						</div>
+						<!--/ End Order Widget -->
+						<!-- Order Widget -->
+						<div class="single-widget">
+							<h2>Какие способы оплаты вас утроят?</h2>
+							<div class="content">
+								<div class="checkbox">
+									<label class="checkbox-inline" for="payment_card">
+										<input name="payment_method" id="payment_card" type="checkbox" value="card">
+										Картой
+									</label>
+									<label class="checkbox-inline" for="payment_cash">
+										<input name="payment_method" id="payment_cash" type="checkbox" value="cash">
+										Оплата при получении
+									</label>
+								</div>
+							</div>
+						</div>
+						<!--/ End Order Widget -->
+						<!-- Payment Method Widget -->
+						<div class="single-widget payement">
+							<div class="content">
+								<img src="images/payment-method.png" alt="#">
+							</div>
+						</div>
+						<!--/ End Payment Method Widget -->
+						<!-- Button Widget -->
+						<div class="single-widget get-button">
+							<div class="content">
+								<div class="button">
+									<button type="submit" class="btn">Заказать согласование</button>
+								</div>
+							</div>
+						</div>
+						<!--/ End Button Widget -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+
+</section>
+<!--/ End Checkout -->
+
+<!-- Start Shop Services Area  -->
+<section class="shop-services section">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-3 col-md-6 col-12">
+				<!-- Start Single Service -->
+				<div class="single-service">
+					<i class="ti-rocket"></i>
+					<h4>Организация доставки</h4>
+					<p>Любым удобным вам способом</p>
+				</div>
+				<!-- End Single Service -->
+			</div>
+			<div class="col-lg-3 col-md-6 col-12">
+				<!-- Start Single Service -->
+				<div class="single-service">
+					<i class="ti-reload"></i>
+					<h4>Гарантия</h4>
+					<p>На каждый товар от 1 года.</p>
+				</div>
+				<!-- End Single Service -->
+			</div>
+			<div class="col-lg-3 col-md-6 col-12">
+				<!-- Start Single Service -->
+				<div class="single-service">
+					<i class="ti-lock"></i>
+					<h4>Безопасная сделка</h4>
+					<p>Все полностью официально</p>
+				</div>
+				<!-- End Single Service -->
+			</div>
+			<div class="col-lg-3 col-md-6 col-12">
+				<!-- Start Single Service -->
+				<div class="single-service">
+					<i class="ti-tag"></i>
+					<h4>Лучшие на рынке</h4>
+					<p>Гарантированная цена</p>
+				</div>
+				<!-- End Single Service -->
+			</div>
+		</div>
+	</div>
+</section>
+<!-- End Shop Newsletter -->
+
+</section>
+<!-- End Shop Newsletter -->
+
+{% endblock %}

@@ -10,8 +10,10 @@ from .products_subcategory_choose import products_subcategory_choose
 from .lamps import get_lamp
 from .add_to_cart import add_to_cart
 from .cart import view_cart, increase_item,  decrease_item, delete_item
+from .checkout import checkout
 
 from flask import Flask
+from flask_login import login_required
 
 
 def register_all_routes(app: Flask):
@@ -54,9 +56,9 @@ def register_all_routes(app: Flask):
     )
 
     app.add_url_rule(
-        rule='/add_to_cart',
+        rule='/add_to_cart/<int:lamp_id>',
         view_func=add_to_cart,
-        methods=['POST']
+        methods=['GET']
     )
 
     app.add_url_rule(
@@ -65,14 +67,20 @@ def register_all_routes(app: Flask):
         methods=['GET']
     )
 
-    @app.route('/cart/increase/<int:item_id>', methods=['POST'])
+    @app.route('/cart/increase/<int:item_id>', methods=['GET', 'POST'])
     def increase_item_route(item_id):
         return increase_item(item_id)
 
-    @app.route('/cart/decrease/<int:item_id>', methods=['POST'])
+    @app.route('/cart/decrease/<int:item_id>', methods=['GET', 'POST'])
     def decrease_item_route(item_id):
         return decrease_item(item_id)
 
-    @app.route('/cart/delete/<int:item_id>', methods=['POST'])
+    @app.route('/cart/delete/<int:item_id>', methods=['GET', 'POST'])
     def delete_item_route(item_id):
         return delete_item(item_id)
+
+    @login_required 
+    @app.route('/checkout', methods=['GET', 'POST'])
+    def checkout_route():
+        return checkout()
+    
