@@ -27,31 +27,21 @@ def register():
         email = request.form.get('email')
         password = request.form.get('password')
 
-        errors = []
-
         # Проверка на пустое имя пользователя
         if not username:
-            errors.append('Имя пользователя не может быть пустым.')
+            return 'Username cannot be empty.', 400
 
         # Проверка на корректность email
         if not validate_email(email):
-            errors.append('Некорректный формат электронной почты.')
+            return 'Invalid email.', 400
 
         # Проверка пароля
         if not validate_password(password):
-            errors.append(
-                'Пароль должен быть минимум 8 символов и содержать хотя бы одну цифру и одну заглавную букву.')
+            return 'Password must be at least 8 characters long, contain at least one digit, and at least one uppercase letter.', 400
 
         # the same email cannot be in database!
         if User.query.filter_by(username=username).first():
-            errors.append('Пользователь с таким именем уже существует.')
-
-        if errors:
-            for error in errors:
-                flash(error, 'error')  # Показываем ошибки на странице
-            # Перенаправляем на страницу регистрации
-            return redirect('/register')
-            
+            return 'A user with this username already exists.', 400
 
         user = User(username=username, email=email)
         user.set_password(password)
@@ -59,7 +49,6 @@ def register():
         db.session.add(user)
         db.session.commit()
 
-        flash('Вы успешно зарегистрировались! Теперь войдите в аккаунт.', 'success')
         return redirect('/login')
     else:
         return render_template('register.html')
