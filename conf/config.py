@@ -15,3 +15,10 @@ class Config:
     ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL')
     ADMIN_PASSWD = os.environ.get('ADMIN_PASSWD')
     UPLOAD_FOLDER = './static/img'
+
+    MAIL_SERVER = os.environ.get('MAIL_SERVER')
+    MAIL_PORT = os.environ.get('MAIL_PORT')
+    SYSTEM_EMAIL = os.environ.get('SYSTEM_EMAIL')
+    SYSTEM_EMAIL_PASSWD = os.environ.get('SYSTEM_EMAIL_PASSWD')
+    
+    MANAGER_EMAIL = os.environ.get('MANAGER_EMAIL')
