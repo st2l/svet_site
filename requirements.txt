@@ -1,8 +1,9 @@
-flask
-sqlalchemy
-flask-sqlalchemy
-werkzeug
-WTForms==3.1.2 
-python-dotenv
-flask-login
-flask-admin
+Flask==3.1.0
+Flask_Admin==1.6.1
+Flask_Login==0.6.3
+flask_sqlalchemy==3.1.1
+pandas==2.2.3
+python-dotenv==1.0.1
+Requests==2.32.3
+SQLAlchemy==2.0.36
+Werkzeug==3.1.3

@@ -43,8 +43,8 @@ def checkout():
         # clear all cartItems from user
         CartItem.query.filter_by(user_id=current_user.id).delete()
         db.session.commit()
-        
-        return redirect('/') 
+
+        return redirect('/')
 
     if not current_user.is_authenticated:
         return "User not logged in", 401
