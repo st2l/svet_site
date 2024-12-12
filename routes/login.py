@@ -22,7 +22,7 @@ def login():
         else:
             flash('Пользователь не найден.', 'error')
 
-        return redirect(url_for('login'))
+        return redirect('/login')
 
     else:
         return render_template('login.html', **filter_params())

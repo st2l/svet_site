@@ -183,7 +183,7 @@ def admin_init(app, db):
 
         def inaccessible_callback(self, name, **kwargs):
             # Перенаправление на страницу входа, если доступ запрещен
-            return redirect(url_for('login'))
+            return redirect('/login')
 
     admin = Admin(app, index_view=MyAdminIndexView(),
                   name='Админка', template_mode='bootstrap4')
@@ -209,7 +209,7 @@ def admin_init(app, db):
 
         def inaccessible_callback(self, name, **kwargs):
             # Перенаправление на страницу входа, если доступ запрещен
-            return redirect(url_for('login'))
+            return redirect('/login')
 
     class CategoryAdmin(AdminModelView):
         """

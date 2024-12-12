@@ -15,7 +15,7 @@ def add_to_cart(lamp_id):
         return jsonify({'error': 'Invalid product ID'}), 400
 
     if not current_user.is_authenticated:
-        return redirect(url_for('login'))
+        return redirect('/login')
 
     existed_crt_item = CartItem.query.filter_by(
         user_id=current_user.id, lamp_id=lamp_id).first()
@@ -27,4 +27,4 @@ def add_to_cart(lamp_id):
     db.session.add(cart_item)
     db.session.commit()
 
-    return redirect(url_for('view_cart'))
+    return redirect('/cart')

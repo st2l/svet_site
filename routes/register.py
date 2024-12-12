@@ -50,7 +50,7 @@ def register():
             for error in errors:
                 flash(error, 'error')  # Показываем ошибки на странице
             # Перенаправляем на страницу регистрации
-            return redirect(url_for('register'))
+            return redirect('/register')
             
 
         user = User(username=username, email=email)
@@ -60,6 +60,6 @@ def register():
         db.session.commit()
 
         flash('Вы успешно зарегистрировались! Теперь войдите в аккаунт.', 'success')
-        return redirect(url_for('login'))
+        return redirect('/login')
     else:
         return render_template('register.html')
