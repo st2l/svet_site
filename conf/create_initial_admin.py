@@ -4,6 +4,15 @@ from .config import Config
 from datetime import datetime
 
 def create_initial_admin(app, db):
+    """
+    Создает начального администратора в базе данных.
+    Аргументы:
+        app: объект приложения Flask
+        db: объект базы данных SQLAlchemy
+    Функция проверяет, существует ли пользователь с заданным именем пользователя и электронной почтой.
+    Если такой пользователь не найден, создается новый пользователь с правами администратора и добавляется в базу данных.
+    """
+
 
     print(Config.ADMIN_NAME, Config.ADMIN_EMAIL, Config.ADMIN_PASSWD)
 
