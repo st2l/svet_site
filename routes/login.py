@@ -18,9 +18,9 @@ def login():
                 # Перенаправление на страницу профиля
                 return redirect('/')
             else:
-                flash('Неверный пароль.', 'error')
+                return 'Wrong passwd.', 400
         else:
-            flash('Пользователь не найден.', 'error')
+            return 'User do not exist.', 400
 
         return redirect('/login')
 
