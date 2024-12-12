@@ -27,6 +27,23 @@ SYSTEM_EMAIL_PASSWD="123465"
 
 # for manager email
 MANAGER_EMAIL="manager@gmail.com"
+
 ```
 
 > If you are deploying your site on a remote hosting -> change this things to actual ones.
+
+2) Installing requirements.txt
+
+```
+
+pip install -r requirements.txt
+
+```
+
+3) Running the application
+
+```python
+
+python ./app.py
+
+```
