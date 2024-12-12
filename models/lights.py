@@ -3,6 +3,15 @@ from .models import db
 
 
 class Category(db.Model):
+    """
+    Класс Category представляет категорию в базе данных.
+    Атрибуты:
+        id (int): Уникальный идентификатор категории.
+        name (str): Название категории, уникальное и не может быть пустым.
+    Методы:
+        __str__(): Возвращает строковое представление названия категории.
+    """
+
     __tablename__ = 'categories'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -13,6 +22,17 @@ class Category(db.Model):
 
 
 class SubCategory(db.Model):
+    """
+    Класс SubCategory представляет подкатегорию товаров.
+    Атрибуты:
+        id (int): Уникальный идентификатор подкатегории.
+        name (str): Название подкатегории, уникальное и обязательное для заполнения.
+        category_id (int): Идентификатор категории, к которой относится подкатегория.
+        category (Category): Связь с моделью Category, обратная связь с подкатегориями.
+    Методы:
+        __str__(): Возвращает строковое представление подкатегории (ее название).
+    """
+
     __tablename__ = 'subcategories'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -27,6 +47,17 @@ class SubCategory(db.Model):
 
 
 class SubSubCategory(db.Model):
+    """
+    Класс SubSubCategory представляет подподкатегорию в базе данных.
+    Атрибуты:
+        id (int): Уникальный идентификатор подподкатегории.
+        name (str): Название подподкатегории, уникальное и не может быть пустым.
+        subcategory_id (int): Идентификатор родительской подкатегории.
+        subcategory (SubCategory): Связь с родительской подкатегорией.
+    Методы:
+        __str__(): Возвращает строковое представление названия подподкатегории.
+    """
+
     __tablename__ = 'subsubcategories'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -41,6 +72,47 @@ class SubSubCategory(db.Model):
 
 
 class Lamp(db.Model):
+    """
+    Класс Lamp представляет модель светильника в базе данных.
+    Атрибуты:
+        id (int): Уникальный идентификатор светильника.
+        subsubcategory_id (int): Идентификатор подкатегории.
+        subsubcategory (relationship): Связь с подкатегорией.
+        model (str): Модель светильника.
+        article (str): Артикул светильника.
+        availability (str): Метка "Уточнить наличие".
+        series (str): Серия (коллекция) светильника.
+        name (str): Наименование элемента.
+        style (str): Стиль светильника.
+        body_color (str): Цвет корпуса светильника.
+        shade_color (str): Цвет плафона светильника.
+        body_material (str): Материал корпуса светильника.
+        shade_material (str): Материал плафона светильника.
+        head_shape (str): Форма "головы" светильника.
+        install_type (str): Тип установки светильника.
+        mount_type (str): Тип крепления светильника.
+        bracket_count (str): Количество кронштейнов.
+        lamp_count (str): Количество ламп.
+        socket_type (str): Тип цоколя.
+        lamp_type (str): Тип ламп.
+        max_power (str): Максимальная мощность светильника.
+        voltage (str): Напряжение светильника.
+        ip_protection (str): Степень защиты IP.
+        weight (str): Вес светильника.
+        height (str): Высота светильника.
+        width (str): Ширина светильника.
+        diameter (str): Размер головы светильника.
+        length (str): Длина светильника.
+        depth (str): Глубина светильника.
+        country (str): Страна производства светильника.
+        warranty (str): Гарантия на светильник.
+        brand (str): Бренд светильника.
+        description (str): Детальное описание светильника.
+        price (float): Цена светильника.
+        main_image (str): Основное изображение светильника.
+        photo1-photo20 (str): Дополнительные изображения светильника.
+    """
+
     __tablename__ = 'lamps'
 
     id = db.Column(db.Integer, primary_key=True)

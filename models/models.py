@@ -7,6 +7,24 @@ db = SQLAlchemy()
 
 
 class User(db.Model, UserMixin):
+    """
+    Класс User представляет пользователя в базе данных.
+    Атрибуты:
+        id (int): Уникальный идентификатор пользователя.
+        username (str): Уникальное имя пользователя.
+        email (str): Уникальный адрес электронной почты пользователя.
+        password_hash (str): Хэш пароля пользователя.
+        created_at (datetime): Дата и время создания пользователя.
+        admin (bool): Флаг, указывающий, является ли пользователь администратором.
+    Методы:
+        set_password(password):
+            Хэширует пароль для сохранения в базе данных.
+        check_password(password):
+            Проверяет пароль на соответствие хэшу.
+        __repr__():
+            Возвращает строковое представление пользователя.
+    """
+
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
