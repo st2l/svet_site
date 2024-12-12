@@ -16,7 +16,7 @@ def login():
             if usr.check_password(password):
                 login_user(usr)
                 # Перенаправление на страницу профиля
-                return redirect(url_for('index'))
+                return redirect('/')
             else:
                 flash('Неверный пароль.', 'error')
         else:

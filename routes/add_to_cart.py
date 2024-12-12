@@ -3,6 +3,13 @@ from models import db, CartItem
 from flask_login import current_user
 
 def add_to_cart(lamp_id):
+    """
+    Добавляет товар в корзину.
+    Аргументы:
+        lamp_id (int): Идентификатор товара (лампы), который нужно добавить в корзину.
+    Возвращает:
+        Response: Перенаправляет на страницу корзины с обновленным товаром или страницу входа, если пользователь не аутентифицирован.
+    """
 
     if not lamp_id:
         return jsonify({'error': 'Invalid product ID'}), 400

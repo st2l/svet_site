@@ -6,6 +6,14 @@ from helpers import filter_params
 
 
 def products_full_choose(category_id, subcategory_id, sub_subcategory_id):
+    """
+    Выбирает и отображает продукты по заданным категориям и подкатегориям.
+    Аргументы:
+        category_id (int): Идентификатор категории.
+        subcategory_id (int): Идентификатор подкатегории.
+        sub_subcategory_id (int): Идентификатор под-подкатегории.
+    """
+
     page = request.args.get('page', 1, type=int)
     per_page = 4 * 5  # Number of items per page
 

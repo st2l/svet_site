@@ -20,6 +20,30 @@ from flask_login import login_required
 
 
 def register_all_routes(app: Flask):
+    """
+    Регистрирует все маршруты для приложения Flask.
+    Аргументы:
+        app (Flask): Экземпляр приложения Flask.
+    Маршруты:
+        - '/' (GET): Главная страница.
+        - '/login' (GET, POST): Страница входа.
+        - '/register' (GET, POST): Страница регистрации.
+        - '/products' (GET): Страница продуктов.
+        - '/contact' (GET): Страница контактов.
+        - '/logout' (GET, POST): Страница выхода.
+        - '/products/<int:category_id>' (GET): Продукты по категории.
+        - '/products/<int:category_id>/<int:subcategory_id>' (GET): Продукты по подкатегории.
+        - '/products/<int:category_id>/<int:subcategory_id>/<int:sub_subcategory_id>' (GET): Продукты по под-подкатегории.
+        - '/lamp/<int:lamp_id>' (GET): Страница лампы.
+        - '/add_to_cart/<int:lamp_id>' (GET): Добавить лампу в корзину.
+        - '/cart' (GET): Просмотр корзины.
+        - '/cart/increase/<int:item_id>' (GET, POST): Увеличить количество товара в корзине.
+        - '/cart/decrease/<int:item_id>' (GET, POST): Уменьшить количество товара в корзине.
+        - '/cart/delete/<int:item_id>' (GET, POST): Удалить товар из корзины.
+        - '/checkout' (GET, POST): Страница оформления заказа (требуется авторизация).
+        - '/search' (GET, POST): Страница поиска.
+    """
+
 
     app.add_url_rule(rule='/', view_func=index, methods=['GET'])
 

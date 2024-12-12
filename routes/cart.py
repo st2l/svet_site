@@ -5,6 +5,16 @@ from helpers import filter_params
 
 
 def view_cart():
+    """
+    Отображает содержимое корзины пользователя.
+    Если пользователь не аутентифицирован, возвращает сообщение об ошибке и статус 401.
+    В противном случае фильтрует параметры и отображает шаблон 'cart.html' с этими параметрами.
+    Возвращает:
+        str: Сообщение об ошибке, если пользователь не аутентифицирован.
+        int: Статус код 401, если пользователь не аутентифицирован.
+        str: Отрендеренный шаблон 'cart.html' с параметрами.
+    """
+
     if not current_user.is_authenticated:
         return "User not logged in", 401
 
@@ -21,7 +31,7 @@ def increase_item(item_id):
         cart_item.amount += 1
         db.session.commit()
 
-    return redirect(url_for('view_cart'))
+    return redirect('/cart')
 
 
 def decrease_item(item_id):
@@ -36,7 +46,7 @@ def decrease_item(item_id):
             db.session.delete(cart_item)
         db.session.commit()
 
-    return redirect(url_for('view_cart'))
+    return redirect('/cart')
 
 
 def delete_item(item_id):
@@ -48,4 +58,4 @@ def delete_item(item_id):
         db.session.delete(cart_item)
         db.session.commit()
 
-    return redirect(url_for('view_cart'))
+    return redirect('/cart')

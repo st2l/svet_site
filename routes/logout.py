@@ -4,6 +4,5 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 
 
 def logout():
-
     logout_user()
-    return redirect(url_for('index'))
+    return redirect('/')
