@@ -6,24 +6,23 @@ from models import Category, SubCategory, SubSubCategory, CartItem, Lamp
 
 def filter_params():
     """
-    Retrieves and filters parameters for categories, subcategories, and cart items.
-    This function gathers all categories, subcategories, and sub-subcategories from the database.
-    It also attempts to retrieve all items from the cart if the user is logged in, and calculates
-    the total price of the items in the cart.
-    
+    Retrieve and organize parameters for categories and cart items.
+    This function fetches all categories, subcategories, and sub-subcategories
+    from the database. It also attempts to retrieve cart items for the current
+    authenticated user, if any, and calculates the total price of the items in
+    the cart.
+
     Returns:
         dict: A dictionary containing the following keys:
             - 'categories': List of all Category objects.
             - 'subcategories_names': List of names of all SubCategory objects.
             - 'subcategories': List of all SubCategory objects.
             - 'sub_subcategories': List of all SubSubCategory objects.
-            - 'cart_items': List of CartItem objects if the user is logged in, otherwise an empty list.
-            - 'current_user': The current user object.
+            - 'cart_items': List of CartItem objects for the current user, if authenticated.
+            - 'current_user': The current authenticated user.
             - 'len_cart_items': The number of items in the cart.
             - 'full_price': The total price of all items in the cart.
     """
-    
-    
 
     params = {}
 
