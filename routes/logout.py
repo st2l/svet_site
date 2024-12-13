@@ -4,5 +4,11 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 
 
 def logout():
+    """
+    Завершает сеанс пользователя и перенаправляет на главную страницу.
+
+    Возвращает:
+        Response: Перенаправление на главную страницу.
+    """
     logout_user()
     return redirect('/')

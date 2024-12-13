@@ -1,4 +1,10 @@
 def database_init(app, db):
+    """
+    Инициализирует базу данных для данного приложения.
+    Args:
+        app (Flask): Экземпляр Flask приложения.
+        db (SQLAlchemy): Экземпляр SQLAlchemy базы данных.
+    """
 
     # database init
     db.init_app(app)

@@ -13,46 +13,65 @@ import requests
 
 def admin_init(app, db):
     """
-    Инициализация административной панели для Flask-приложения.
-    Параметры:
-    app (Flask): Экземпляр Flask-приложения.
-    db (SQLAlchemy): Экземпляр SQLAlchemy для взаимодействия с базой данных.
-    Описание:
-    Функция настраивает административную панель с использованием flask-admin. 
-    Включает в себя:
-    - Кастомизированный индексный вид для административной панели.
-    - Обработку загрузки и обработки данных из Excel-файлов.
-    - Загрузку изображений по URL и сохранение их на сервере.
-    - Настройку моделей для отображения в административной панели (Категории, Подкатегории, Подподкатегории, Лампы, Корзина).
-    - Ограничение доступа к административной панели только для авторизованных пользователей с правами администратора.
+    Инициализирует административную панель для приложения Flask.
+    Аргументы:
+        app (Flask): Экземпляр приложения Flask.
+        db (SQLAlchemy): Экземпляр базы данных SQLAlchemy.
+    Внутренние классы:
+        MyAdminIndexView (AdminIndexView): Кастомизированный класс для главной страницы административной панели.
+        AdminModelView (ModelView): Базовый класс для создания административных интерфейсов для моделей.
+        CategoryAdmin (AdminModelView): Административный интерфейс для управления категориями.
+        SubCategoryAdmin (AdminModelView): Административный интерфейс для управления подкатегориями.
+        SubSubCategoryAdmin (AdminModelView): Административный интерфейс для управления подподкатегориями.
+        LampView (AdminModelView): Административный интерфейс для управления лампами.
+        CartView (AdminModelView): Административный интерфейс для управления корзинами.
+        download_image(url, save_path): Загружает изображение по указанному URL и сохраняет его по указанному пути.
+        process_excel_data(df): Обрабатывает данные из Excel файла и сохраняет их в базу данных.
     """
 
     # flask-admin configuration
 
     class MyAdminIndexView(AdminIndexView):
         """
-        Класс MyAdminIndexView расширяет AdminIndexView и предоставляет следующие методы:
+        Класс MyAdminIndexView предоставляет пользовательский интерфейс администратора с возможностью загрузки и обработки данных из Excel файлов, а также загрузки изображений.
         Методы:
             index():
-                Отображает главную страницу административной панели.
+                Отображает главную страницу пользовательского интерфейса администратора.
             merge_excel():
-                Обрабатывает загрузку и объединение данных из Excel файла. Поддерживает методы GET и POST.
+                Обрабатывает загрузку Excel файла, извлекает данные и вызывает метод process_excel_data для обработки данных.
             download_image(url, save_path):
-                Загружает изображение по указанному URL и сохраняет его по указанному пути. Возвращает True, если загрузка успешна, иначе False.
+                Загружает изображение по указанному URL и сохраняет его по указанному пути.
             process_excel_data(df):
-                Обрабатывает данные из Excel файла и сохраняет их в базу данных. Также загружает изображения и сохраняет их локально.
+                Обрабатывает данные из DataFrame, извлеченного из Excel файла, и сохраняет их в базе данных.
             is_accessible():
-                Проверяет, доступен ли данный вид для текущего пользователя. Доступ разрешен только для авторизованных администраторов.
+                Проверяет, доступен ли интерфейс администратора для текущего пользователя.
             inaccessible_callback(name, **kwargs):
-                Перенаправляет на страницу входа, если доступ запрещен.
+                Перенаправляет пользователя на страницу входа, если доступ к интерфейсу администратора запрещен.
         """
 
         @expose('/')
         def index(self):
+            """
+            Возвращает HTML-страницу для пользовательской административной панели.
+            Возвращает:
+                str: HTML-код страницы 'admin/custom_admin.html'.
+            """
             return self.render('admin/custom_admin.html')
-        
+
         @expose('/merge_excel', methods=['GET', 'POST'])
         def merge_excel(self):
+            """
+            Обрабатывает POST-запрос для загрузки и обработки Excel файла.
+            Метод выполняет следующие действия:
+            1. Проверяет, является ли метод запроса POST.
+            2. Получает файл из запроса.
+            3. Если файл существует, считывает его в DataFrame с помощью pandas.
+            4. Вызывает метод process_excel_data для обработки данных из DataFrame.
+            5. Возвращает HTML-шаблон 'admin/merge_excel.html'.
+            Returns:
+                str: HTML-шаблон 'admin/merge_excel.html'.
+            """
+
             if request.method == 'POST':
                 file = request.files['excel_file']
                 if file:
@@ -61,6 +80,15 @@ def admin_init(app, db):
             return self.render('admin/merge_excel.html')
 
         def download_image(self, url, save_path):
+            """
+            Загружает изображение по указанному URL и сохраняет его в указанное место.
+            Args:
+                url (str): URL изображения для загрузки.
+                save_path (str): Путь для сохранения загруженного изображения.
+            Returns:
+                bool: Возвращает True, если изображение успешно загружено и сохранено, иначе False.
+            """
+
             response = requests.get(url)
             if response.status_code == 200:
                 with open(save_path, 'wb') as f:
@@ -69,6 +97,20 @@ def admin_init(app, db):
             return False
 
         def process_excel_data(self, df):
+            """
+            Обрабатывает данные из Excel и сохраняет их в базе данных.
+            Аргументы:
+                df (pandas.DataFrame): DataFrame, содержащий данные из Excel.
+            Обработка:
+                - Перебирает строки DataFrame.
+                - Извлекает и обрабатывает данные о категориях, подкатегориях и подподкатегориях.
+                - Извлекает и обрабатывает данные о лампах.
+                - Загружает изображения и сохраняет их пути.
+                - Сохраняет данные о категориях, подкатегориях, подподкатегориях и лампах в базе данных.
+            Исключения:
+                - Обрабатывает исключения при загрузке изображений и сохраняет None в случае ошибки.
+            """
+
             i = 0
             for _, row in df.iterrows():
                 i += 1
@@ -83,8 +125,6 @@ def admin_init(app, db):
                     subsubcategory_name = category_name
                 elif subcategory_name and (not subsubcategory_name or str(subsubcategory_name) == 'nan'):
                     subsubcategory_name = subcategory_name
-                
-
 
                 lamp_data = {
                     'model': row['Модель [PROP_2049]'],
@@ -159,29 +199,50 @@ def admin_init(app, db):
                     db.session.add(category)
                     db.session.commit()
 
-                subcategory = SubCategory.query.filter_by(name=subcategory_name, category_id=category.id).first()
+                subcategory = SubCategory.query.filter_by(
+                    name=subcategory_name, category_id=category.id).first()
                 if not subcategory:
-                    subcategory = SubCategory(name=subcategory_name, category_id=category.id)
+                    subcategory = SubCategory(
+                        name=subcategory_name, category_id=category.id)
                     db.session.add(subcategory)
                     db.session.commit()
 
-                subsubcategory = SubSubCategory.query.filter_by(name=subsubcategory_name, subcategory_id=subcategory.id).first()
+                subsubcategory = SubSubCategory.query.filter_by(
+                    name=subsubcategory_name, subcategory_id=subcategory.id).first()
                 if not subsubcategory:
-                    subsubcategory = SubSubCategory(name=subsubcategory_name, subcategory_id=subcategory.id)
+                    subsubcategory = SubSubCategory(
+                        name=subsubcategory_name, subcategory_id=subcategory.id)
                     db.session.add(subsubcategory)
                     db.session.commit()
 
-                lamp = Lamp.query.filter_by(name=lamp_data['name'], subsubcategory_id=subsubcategory.id).first()
+                lamp = Lamp.query.filter_by(
+                    name=lamp_data['name'], subsubcategory_id=subsubcategory.id).first()
                 if not lamp:
-                    lamp = Lamp(subsubcategory_id=subsubcategory.id, **lamp_data)
+                    lamp = Lamp(
+                        subsubcategory_id=subsubcategory.id, **lamp_data)
                     db.session.add(lamp)
                     db.session.commit()
 
         def is_accessible(self):
+            """
+            Определяет, доступен ли ресурс для текущего пользователя.
+            Возвращает:
+                bool: True, если пользователь авторизован и является администратором, иначе False.
+            """
+
             # Доступ только для авторизованных пользователей
             return current_user.is_authenticated and current_user.admin
 
         def inaccessible_callback(self, name, **kwargs):
+            """
+            Перенаправляет пользователя на страницу входа, если доступ запрещен.
+            Args:
+                name (str): Имя ресурса, к которому был запрещен доступ.
+                **kwargs: Дополнительные аргументы.
+            Returns:
+                werkzeug.wrappers.Response: Ответ с перенаправлением на страницу входа.
+            """
+
             # Перенаправление на страницу входа, если доступ запрещен
             return redirect('/login')
 
@@ -199,15 +260,30 @@ def admin_init(app, db):
             inaccessible_callback(name, **kwargs): Перенаправляет на страницу входа, если доступ запрещен.
         """
 
-
         column_display_pk = True  # optional, but I like to see the IDs in the list
         column_hide_backrefs = False
 
         def is_accessible(self):
+            """
+            Определяет доступность для пользователя.
+            Возвращает True, если текущий пользователь авторизован и является администратором.
+            Returns:
+                bool: Доступность для пользователя.
+            """
+
             # Доступ только для авторизованных пользователей
             return current_user.is_authenticated and current_user.admin
 
         def inaccessible_callback(self, name, **kwargs):
+            """
+            Перенаправляет пользователя на страницу входа, если доступ запрещен.
+            Args:
+                name (str): Имя ресурса, к которому был запрещен доступ.
+                **kwargs: Дополнительные аргументы.
+            Returns:
+                redirect: Ответ с перенаправлением на страницу входа.
+            """
+
             # Перенаправление на страницу входа, если доступ запрещен
             return redirect('/login')
 
@@ -236,7 +312,6 @@ def admin_init(app, db):
                 'category' (str): Метка для категории.
         """
 
-
         column_labels = {
             'id': 'ID',
             'name': 'Название',
@@ -254,7 +329,6 @@ def admin_init(app, db):
                 'subcategory_id' (str): Метка для идентификатора родительской подкатегории.
                 'subcategory' (str): Метка для родительской подкатегории.
         """
-
 
         column_labels = {
             'id': 'ID',
@@ -453,7 +527,7 @@ def admin_init(app, db):
                 'allowed_extensions': {'png', 'jpg', 'jpeg', 'gif'}
             },
         }
-    
+
     class CartView(AdminModelView):
         column_labels = {
             'id': 'ID',
