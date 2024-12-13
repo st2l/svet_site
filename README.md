@@ -4,7 +4,7 @@
 Site for internet-shop for street lights.
 
 It is on github ***ONLY for educational purposes***!!!
-It can't be used by anyone without [author](https://github.com/st2l) permission
+It can't be used by anyone without [author](https://github.com/st2l) permission!
 
 ## Deploy
 
