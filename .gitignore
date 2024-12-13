@@ -7,3 +7,5 @@ instance/*
 imgs
 /static/img
 .vscode
+svet_site.wiki/*
+svet_site.wiki
