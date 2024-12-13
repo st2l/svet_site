@@ -7,15 +7,16 @@ from helpers import filter_params
 
 def products_category_choose(category_id):
     """
-    Обрабатывает выбор категории продуктов и отображает соответствующие лампы на странице.
-    Аргументы:
-        category_id (int): Идентификатор выбранной категории.
-    Описание:
-        Функция получает номер страницы из параметров запроса и определяет количество элементов на странице.
-        Затем она находит все подкатегории и под-подкатегории, связанные с выбранной категорией.
-        После этого функция выполняет пагинацию ламп, принадлежащих найденным под-подкатегориям.
-        В конце функция рендерит HTML-шаблон 'products_category.html' с параметрами, включающими список ламп,
-        объект пагинации и идентификатор выбранной категории.
+    Handles the selection of products based on the chosen category.
+    
+    Args:
+        category_id (int): The ID of the chosen category.
+    Returns:
+        Response: Renders the 'products_category.html' template with the following context:
+            - lamps (list): A list of Lamp objects for the current page.
+            - pagination (Pagination): Pagination object for the lamps.
+            - chosen_cat (int): The ID of the chosen category.
+            - Additional parameters from the filter_params() function.
     """
 
     page = request.args.get('page', 1, type=int)

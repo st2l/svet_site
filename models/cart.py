@@ -5,18 +5,21 @@ from .lights import Lamp
 
 class CartItem(db.Model):
     """
-    Класс, представляющий элемент корзины.
-    Атрибуты:
-        id (int): Уникальный идентификатор элемента корзины.
-        user_id (int): Идентификатор пользователя, которому принадлежит элемент корзины.
-        lamp_id (int): Идентификатор лампы, добавленной в корзину.
-        amount (int): Количество ламп в корзине (по умолчанию 1).
-        user (User): Связь с моделью пользователя.
-        lamp (Lamp): Связь с моделью лампы.
-    Методы:
-        __str__(): Возвращает строковое представление элемента корзины.
-        __repr__(): Возвращает строковое представление объекта CartItem для отладки.
+    Represents an item in the shopping cart.
+    
+    Attributes:
+        id (int): The unique identifier for the cart item.
+        user_id (int): The ID of the user who owns the cart item.
+        lamp_id (int): The ID of the lamp associated with the cart item.
+        amount (int): The quantity of the lamp in the cart.
+    Relationships:
+        user (User): The user who owns the cart item.
+        lamp (Lamp): The lamp associated with the cart item.
+    Methods:
+        __str__(): Returns a string representation of the cart item.
+        __repr__(): Returns a detailed string representation of the cart item.
     """
+    
 
     __tablename__ = 'cart_items'
 

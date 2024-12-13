@@ -8,21 +8,22 @@ db = SQLAlchemy()
 
 class User(db.Model, UserMixin):
     """
-    Класс User представляет пользователя в базе данных.
-    Атрибуты:
-        id (int): Уникальный идентификатор пользователя.
-        username (str): Уникальное имя пользователя.
-        email (str): Уникальный адрес электронной почты пользователя.
-        password_hash (str): Хэш пароля пользователя.
-        created_at (datetime): Дата и время создания пользователя.
-        admin (bool): Флаг, указывающий, является ли пользователь администратором.
-    Методы:
+    Represents a user in the application.
+    
+    Attributes:
+        id (int): The unique identifier for the user.
+        username (str): The username of the user, must be unique and not null.
+        email (str): The email address of the user, must be unique and not null.
+        password_hash (str): The hashed password of the user, not null.
+        created_at (datetime): The timestamp when the user was created, defaults to the current UTC time.
+        admin (bool): Indicates whether the user has administrative privileges, defaults to False.
+    Methods:
         set_password(password):
-            Хэширует пароль для сохранения в базе данных.
+            Hashes the given password and stores it in the password_hash attribute.
         check_password(password):
-            Проверяет пароль на соответствие хэшу.
+            Checks if the given password matches the stored password hash.
         __repr__():
-            Возвращает строковое представление пользователя.
+            Returns a string representation of the user.
     """
 
     __tablename__ = 'users'

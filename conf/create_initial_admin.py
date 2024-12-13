@@ -10,6 +10,7 @@ def create_initial_admin(app, db):
     This function checks if a user with the username and email specified in the
     Config class exists in the database. If not, it creates a new admin user
     with the specified credentials and adds it to the database.
+    
     :param app: The Flask application instance.
     :type app: Flask
     :param db: The database instance.

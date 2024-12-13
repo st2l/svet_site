@@ -7,13 +7,17 @@ from helpers import filter_params
 
 def products():
     """
-    Обрабатывает запрос на получение списка продуктов и возвращает отрендеренный HTML шаблон.
-    Запросы:
-        page (int, optional): Номер страницы для пагинации. По умолчанию 1.
-    Возвращает:
-        str: Отрендеренный HTML шаблон с продуктами и параметрами пагинации.
+    Handle the products route to display a paginated list of lamps.
+    This function retrieves the current page number from the request arguments,
+    calculates the number of items per page, and queries the Lamp model to get
+    the paginated list of lamps. It then prepares the parameters for rendering
+    the 'products.html' template, including the list of lamps and pagination
+    details, and updates these parameters with additional filter parameters.
+
+    Returns:
+        Response: The rendered 'products.html' template with the lamps and
+        pagination details.
     """
-    
 
     page = request.args.get('page', 1, type=int)
     per_page = 4 * 5  # Number of items per page

@@ -6,11 +6,12 @@ from helpers import filter_params
 
 def validate_email(email):
     """
-    Проверяет, является ли введенный адрес электронной почты допустимым.
-    Аргументы:
-        mail (str): Адрес электронной почты для проверки.
-    Возвращает:
-        bool: True, если адрес электронной почты допустим, иначе False.
+    Validates if the provided email address matches the standard email format.
+
+    Args:
+        email (str): The email address to validate.
+    Returns:
+        bool: True if the email address is valid, False otherwise.
     """
 
     email_regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
@@ -19,15 +20,15 @@ def validate_email(email):
 
 def validate_password(password):
     """
-    Проверяет, соответствует ли пароль заданным критериям.
-    Аргументы:
-    password (str): Пароль для проверки.
-    Возвращает:
-        bool: True, если пароль соответствует всем критериям, иначе False.
-    Критерии:
-    - Пароль должен быть хотя бы 8 символов.
-    - Пароль должен содержать хотя бы одну цифру.
-    - Пароль должен содержать хотя бы одну заглавную букву.
+    Validates the given password based on the following criteria:
+    - The password must be at least 8 characters long.
+    - The password must contain at least one digit.
+    - The password must contain at least one uppercase letter.
+
+    Args:
+        password (str): The password to validate.
+    Returns:
+        bool: True if the password meets all criteria, False otherwise.
     """
 
     if len(password) < 8:
@@ -42,22 +43,17 @@ def validate_password(password):
 
 def register():
     """
-    Обрабатывает регистрацию нового пользователя.
-    Если метод запроса 'POST', функция выполняет следующие действия:
-    1. Получает имя пользователя, email и пароль из формы запроса.
-    2. Проверяет, что имя пользователя не пустое.
-    3. Проверяет корректность email.
-    4. Проверяет, что пароль соответствует требованиям (не менее 8 символов, содержит хотя бы одну цифру и одну заглавную букву).
-    5. Проверяет, что пользователь с таким именем пользователя не существует в базе данных.
-    6. Создает нового пользователя и сохраняет его в базе данных.
-    7. Перенаправляет пользователя на страницу входа.
-    Если метод запроса не 'POST', функция возвращает страницу регистрации.
-    Returns:
-        str: Сообщение об ошибке и код состояния 400, если проверка не пройдена.
-        Response: Перенаправление на страницу входа при успешной регистрации.
-        Response: Страница регистрации, если метод запроса не 'POST'.
-    """
+    Handle user registration.
+    This function processes the registration form submitted via POST request.
+    It validates the username, email, and password, checks for existing users,
+    and creates a new user if all validations pass. If the request method is GET,
+    it renders the registration template.
 
+    Returns:
+        str: Error message and HTTP status code 400 if validation fails.
+        werkzeug.wrappers.Response: Redirect to the login page on successful registration.
+        flask.Response: Rendered registration template for GET requests.
+    """
 
     if request.method == 'POST':
 

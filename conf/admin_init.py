@@ -12,7 +12,6 @@ import requests
 
 
 def admin_init(app, db):
-
     # flask-admin configuration
 
     class MyAdminIndexView(AdminIndexView):

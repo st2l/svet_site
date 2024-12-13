@@ -5,10 +5,13 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 
 def logout():
     """
-    Завершает сеанс пользователя и перенаправляет на главную страницу.
-
-    Возвращает:
-        Response: Перенаправление на главную страницу.
+    Logs out the current user and redirects to the home page.
+    This function logs out the currently authenticated user by calling the
+    `logout_user` function and then redirects the user to the root URL ('/').
+    
+    Returns:
+        werkzeug.wrappers.Response: A redirect response to the home page.
     """
+    
     logout_user()
     return redirect('/')

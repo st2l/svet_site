@@ -5,15 +5,13 @@ from models import Category, Lamp
 
 def index():
     """
-    Главная страница сайта.
-    Возвращает главную страницу сайта с параметрами, включающими идентификатор категории "Парковые фонари" 
-    и список самых дорогих ламп.
-    Возвращаемые параметры:
-        park_lights_idx (int): Идентификатор категории "Парковые фонари".
-        lamps (list): Список объектов Lamp, отсортированных по убыванию цены, ограниченный 15 элементами.
-        **params: Дополнительные параметры, возвращаемые функцией filter_params().
-    Возвращает:
-        str: Сгенерированный HTML-код главной страницы.
+    Renders the index page with specific parameters.
+    This function queries the database to retrieve the category ID for "Парковые фонари"
+    and the 15 most expensive lamps. It then combines these parameters with additional
+    filter parameters and renders the 'index.html' template with the combined parameters.
+    
+    Returns:
+        str: The rendered HTML content for the index page.
     """
 
     park_lights_idx = Category.query.filter(

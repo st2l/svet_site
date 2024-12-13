@@ -6,19 +6,17 @@ from helpers import filter_params
 
 def login():
     """
-    Обрабатывает запросы на вход пользователя.
-    POST:
-        Получает email и пароль из формы запроса.
-        Проверяет наличие пользователя с данным email.
-        Если пользователь существует, проверяет правильность пароля.
-        При успешной проверке пароля, выполняет вход пользователя и перенаправляет на главную страницу.
-        В случае неправильного пароля возвращает сообщение об ошибке.
-        В случае отсутствия пользователя возвращает сообщение об ошибке.
-    GET:
-        Возвращает страницу входа.
-    Возвращает:
-        str: Сообщение об ошибке в случае неудачи.
-        Response: Перенаправление на главную страницу или страницу входа.
+    Handle the login process for users.
+    If the request method is POST, it retrieves the email and password from the form data.
+    It then checks if a user with the provided email exists in the database.
+    If the user exists, it verifies the password. If the password is correct, the user is logged in
+    and redirected to the profile page. If the password is incorrect, it returns a 400 status with
+    a 'Wrong passwd.' message. If the user does not exist, it returns a 400 status with a 'User do not exist.' message.
+    If the request method is not POST, it renders the login page.
+
+    Returns:
+        Response: A redirect to the profile page on successful login, a 400 status with an error message
+        on failure, or the login page if the request method is not POST.
     """
 
     if request.method == 'POST':

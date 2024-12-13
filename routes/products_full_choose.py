@@ -7,11 +7,14 @@ from helpers import filter_params
 
 def products_full_choose(category_id, subcategory_id, sub_subcategory_id):
     """
-    Выбирает и отображает продукты по заданным категориям и подкатегориям.
-    Аргументы:
-        category_id (int): Идентификатор категории.
-        subcategory_id (int): Идентификатор подкатегории.
-        sub_subcategory_id (int): Идентификатор под-подкатегории.
+    Renders the products page with a list of lamps filtered by the given sub-subcategory.
+
+    Args:
+        category_id (int): The ID of the main category.
+        subcategory_id (int): The ID of the subcategory.
+        sub_subcategory_id (int): The ID of the sub-subcategory.
+    Returns:
+        Response: The rendered HTML template for the products page with the filtered lamps and pagination.
     """
 
     page = request.args.get('page', 1, type=int)

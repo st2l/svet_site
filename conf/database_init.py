@@ -3,6 +3,7 @@ def database_init(app, db):
     Initialize the database with the given Flask application.
     This function initializes the database with the provided Flask application
     and creates all database tables within the application context.
+    
     :param app: The Flask application instance.
     :type app: Flask
     :param db: The database instance to be initialized.

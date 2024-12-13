@@ -7,14 +7,16 @@ from helpers import filter_params
 
 def get_lamp(lamp_id):
     """
-    Возвращает страницу с информацией о лампе или сообщение об ошибке, если лампа не найдена.
-    Args:
-        lamp_id (int): Идентификатор лампы.
-    Returns:
-        Рендер страницы: HTML-страницу с информацией о лампе и код состояния 200, 
-               если лампа найдена, или JSON-ответ с сообщением об ошибке и код состояния 404, если лампа не найдена.
-    """
+    Retrieve and render a lamp by its ID.
     
+    Args:
+        lamp_id (int): The ID of the lamp to retrieve.
+    Returns:
+        tuple: A tuple containing the rendered template and HTTP status code.
+            - If the lamp is found, returns a rendered 'lamp.html' template with lamp details and a 200 status code.
+            - If the lamp is not found, returns a JSON response with an error message and a 404 status code.
+    """
+
     lamp = Lamp.query.filter_by(id=lamp_id).first()
 
     params = {

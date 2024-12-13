@@ -12,6 +12,7 @@ def init_login_manager(app):
     def load_user(user_id):
         """
         Load a user from the database by user ID.
+        
         :param user_id: The ID of the user to load.
         :type user_id: int
         :return: The user object if found, otherwise None.

@@ -7,10 +7,23 @@ from helpers import filter_params
 
 def products_subcategory_choose(category_id, subcategory_id):
     """
-    Обрабатывает выбор подкатегории продуктов и отображает соответствующие товары.
-    Аргументы:
-        category_id (int): Идентификатор категории.
-        subcategory_id (int): Идентификатор подкатегории.
+    Handles the selection of products based on the given category and subcategory IDs.
+    
+    Args:
+        category_id (int): The ID of the category.
+        subcategory_id (int): The ID of the subcategory.
+    Returns:
+        str: The rendered HTML template for the products subcategory page.
+    
+    This function performs the following steps:
+    1. Retrieves the current page number from the request arguments, defaulting to 1.
+    2. Sets the number of items per page.
+    3. Queries the database for sub-subcategories that belong to the given subcategory.
+    4. Queries the database for lamps that belong to the retrieved sub-subcategories.
+    5. Paginates the lamp results.
+    6. Prepares the parameters for rendering the template, including lamps, chosen subcategory, pagination, and chosen category.
+    7. Updates the parameters with additional filter parameters.
+    8. Renders and returns the 'products_subcategory.html' template with the prepared parameters.
     """
 
     page = request.args.get('page', 1, type=int)

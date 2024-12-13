@@ -8,20 +8,22 @@ from helpers import send_email
 
 def checkout():
     """
-    Обрабатывает процесс оформления заказа.
-    Если метод запроса 'POST', извлекает данные формы, формирует сообщение с информацией о заказе и отправляет его
-    на указанный email менеджера. 
-    Затем очищает корзину пользователя и перенаправляет на главную страницу.
-    Если пользователь не аутентифицирован, возвращает сообщение об ошибке с кодом 401.
-    Если пользователь не найден, возвращает сообщение об ошибке с кодом 404.
-    Возвращает страницу оформления заказа с параметрами по умолчанию.
-    Возвращаемое значение:
-        - Если метод запроса 'POST': перенаправление на главную страницу.
-        - Если пользователь не аутентифицирован: сообщение об ошибке и код 401.
-        - Если пользователь не найден: сообщение об ошибке и код 404.
-        - В остальных случаях: страница оформления заказа.
+    Handle the checkout process for the user.
+    If the request method is POST, it processes the form data, sends an email to the manager with the order details,
+    clears the user's cart, and redirects to the home page.
+    If the user is not authenticated, it returns a 401 status code with a "User not logged in" message.
+    If the user is not found, it returns a 404 status code with a "User not found" message.
+    
+    Returns:
+        - If the form is submitted (POST request):
+            - Redirects to the home page after processing the order.
+        - If the user is not authenticated:
+            - A tuple containing the message "User not logged in" and the status code 401.
+        - If the user is not found:
+            - A tuple containing the message "User not found" and the status code 404.
+        - For other requests:
+            - Renders the checkout page with the default categories.
     """
-
 
     if request.method == 'POST':  # if the form is submitted
         first_name = request.form.get('first_name')

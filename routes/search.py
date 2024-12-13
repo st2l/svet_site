@@ -5,17 +5,18 @@ from helpers import filter_params
 
 def search(search_option=None, search_text=None):
     """
-    Выполняет поиск ламп по заданным параметрам.
-    Аргументы:
-    search_option (str): Опция поиска, может быть 'name', 'description' или 'article'. По умолчанию None.
-    search_text (str): Текст для поиска. По умолчанию None.
-    Возвращает:
-    Response: HTML-страница с результатами поиска и пагинацией.
-    Примечания:
-    - Если метод запроса POST, данные поиска извлекаются из формы.
-    - Если метод запроса GET, данные поиска извлекаются из параметров URL.
-    - Пагинация осуществляется с помощью метода paginate, отображая 20 элементов на странице.
+    Handle search requests for lamps based on different search options.
+    This function processes both POST and GET requests to search for lamps
+    in the database. It supports searching by name, description, or article.
+    The results are paginated and rendered in the 'search.html' template.
+    
+    Args:
+        search_option (str, optional): The field to search by ('name', 'description', or 'article'). Defaults to None.
+        search_text (str, optional): The text to search for in the specified field. Defaults to None.
+    Returns:
+        Response: The rendered 'search.html' template with search results and pagination.
     """
+    
 
     if request.method == 'POST':  # of it's form so we need to get data from form
 

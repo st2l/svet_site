@@ -6,13 +6,12 @@ from helpers import filter_params
 
 def view_cart():
     """
-    Отображает содержимое корзины пользователя.
-    Если пользователь не аутентифицирован, возвращает сообщение об ошибке и статус 401.
-    В противном случае фильтрует параметры и отображает шаблон 'cart.html' с этими параметрами.
-    Возвращает:
-        str: Сообщение об ошибке, если пользователь не аутентифицирован.
-        int: Статус код 401, если пользователь не аутентифицирован.
-        str: Отрендеренный шаблон 'cart.html' с параметрами.
+    Handle the view cart request.
+    This function checks if the current user is authenticated. If not, it returns a 401 status code with a message indicating that the user is not logged in. If the user is authenticated, it filters the parameters and renders the 'cart.html' template with the filtered parameters.
+
+    Returns:
+        tuple: A message and a status code if the user is not authenticated.
+        str: Rendered 'cart.html' template with filtered parameters if the user is authenticated.
     """
 
     if not current_user.is_authenticated:
