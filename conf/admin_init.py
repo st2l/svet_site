@@ -65,7 +65,6 @@ def admin_init(app, db):
         inaccessible_callback(name, **kwargs):
             Redirects the user to the login page if access is denied.
         """
-        
 
         @expose('/')
         def index(self):
@@ -75,7 +74,7 @@ def admin_init(app, db):
             :return: Rendered HTML for the custom admin page.
             :rtype: str
             """
-            
+
             return self.render('admin/custom_admin.html')
 
         @expose('/merge_excel', methods=['GET', 'POST'])
@@ -89,7 +88,6 @@ def admin_init(app, db):
             :return: Rendered HTML template for merging Excel files.
             :rtype: str
             """
-            
 
             if request.method == 'POST':
                 file = request.files['excel_file']
@@ -109,7 +107,6 @@ def admin_init(app, db):
             :return: True if the image was successfully downloaded and saved, False otherwise.
             :rtype: bool
             """
-            
 
             response = requests.get(url)
             if response.status_code == 200:
@@ -124,13 +121,12 @@ def admin_init(app, db):
             This method iterates through each row of the provided DataFrame, extracts lamp data,
             processes image URLs, and saves the data into the database. It also handles the creation
             of categories, subcategories, and subsubcategories if they do not already exist.
-            
+
             :param df: pandas DataFrame containing the Excel data to be processed.
             :type df: pandas.DataFrame
             :raises Exception: If there is an error while downloading images or saving data to the database.
             :return: None
             """
-            
 
             i = 0
             for _, row in df.iterrows():
@@ -247,11 +243,10 @@ def admin_init(app, db):
         def is_accessible(self):
             """
             Check if the current user is authorized to access the admin interface.
-            
+
             :return: True if the current user is authenticated and has admin privileges, False otherwise.
             :rtype: bool
             """
-            
 
             # Доступ только для авторизованных пользователей
             return current_user.is_authenticated and current_user.admin
@@ -270,7 +265,6 @@ def admin_init(app, db):
             :return: A redirect response to the login page.
             :rtype: werkzeug.wrappers.Response
             """
-            
 
             # Перенаправление на страницу входа, если доступ запрещен
             return redirect('/login')
@@ -295,7 +289,6 @@ def admin_init(app, db):
                     **kwargs: Additional arguments.
                     redirect: A response that redirects to the login page.
         """
-        
 
         column_display_pk = True  # optional, but I like to see the IDs in the list
         column_hide_backrefs = False
@@ -309,7 +302,6 @@ def admin_init(app, db):
             .. note::
                 Access is granted only to authenticated users with admin privileges.
             """
-            
 
             # Доступ только для авторизованных пользователей
             return current_user.is_authenticated and current_user.admin
@@ -328,23 +320,11 @@ def admin_init(app, db):
             :return: A redirect response to the login page.
             :rtype: werkzeug.wrappers.Response
             """
-            
 
             # Перенаправление на страницу входа, если доступ запрещен
             return redirect('/login')
 
     class CategoryAdmin(AdminModelView):
-        """
-        CategoryAdmin is a subclass of AdminModelView that customizes the
-        admin interface for the Category model.
-        Attributes
-        ----------
-        column_labels : dict
-            A dictionary that maps model field names to their corresponding
-            labels in the admin interface. In this case, 'id' is labeled as 'ID'
-            and 'name' is labeled as 'Название'.
-        """
-        
 
         column_labels = {
             'id': 'ID',
@@ -352,20 +332,6 @@ def admin_init(app, db):
         }
 
     class SubCategoryAdmin(AdminModelView):
-        """
-        SubCategoryAdmin is a custom admin view for managing subcategories.
-        Attributes
-        ----------
-        column_labels : dict
-            A dictionary mapping model field names to their corresponding labels
-            for display in the admin interface. The keys are the field names and
-            the values are the labels.
-            - 'id': 'ID'
-            - 'name': 'Название'
-            - 'category_id': 'ID Категории'
-            - 'category': 'Категория'
-        """
-        
 
         column_labels = {
             'id': 'ID',
@@ -375,21 +341,6 @@ def admin_init(app, db):
         }
 
     class SubSubCategoryAdmin(AdminModelView):
-        """
-        SubSubCategoryAdmin is a custom admin view for managing sub-subcategories.
-        Attributes
-        ----------
-        column_labels : dict
-            A dictionary that maps the model field names to their corresponding labels
-            in the admin interface. The keys are the field names and the values are the
-            labels to be displayed.
-            - 'id': 'ID'
-            - 'name': 'Название'
-            - 'subcategory_id': 'ID Подкатегории'
-            - 'subcategory': 'Подкатегория'
-        """
-        
-
         column_labels = {
             'id': 'ID',
             'name': 'Название',
@@ -398,126 +349,6 @@ def admin_init(app, db):
         }
 
     class LampView(AdminModelView):
-        """
-        LampView class for managing lamp-related data in the admin interface.
-        This class extends the AdminModelView and provides custom configurations
-        for displaying and handling lamp data, including column labels, form overrides,
-        and form arguments for file upload fields.
-
-        Attributes
-        ----------
-        column_labels : dict
-            A dictionary mapping model field names to their corresponding labels
-            in the admin interface.
-        form_overrides : dict
-            A dictionary specifying custom form fields for certain model fields.
-        form_args : dict
-            A dictionary specifying additional arguments for form fields, such as
-            labels, base paths for file uploads, and allowed file extensions.
-        Column Labels
-        -------------
-        - id: ID
-        - subsubcategory_id: ID Подподкатегории
-        - subsubcategory: Подподкатегория
-        - model: Модель
-        - article: Артикул
-        - availability: Наличие
-        - series: Серия
-        - name: Наименование
-        - style: Стиль
-        - body_color: Цвет корпуса
-        - shade_color: Цвет плафона
-        - body_material: Материал корпуса
-        - shade_material: Материал плафона
-        - head_shape: Форма головы
-        - install_type: Тип установки
-        - mount_type: Тип крепления
-        - bracket_count: Количество кронштейнов
-        - lamp_count: Количество ламп
-        - socket_type: Цоколь
-        - lamp_type: Тип ламп
-        - max_power: Макс. мощность
-        - voltage: Напряжение
-        - ip_protection: Степень защиты IP
-        - weight: Вес
-        - height: Высота
-        - width: Ширина
-        - diameter: Диаметр
-        - length: Длина
-        - depth: Глубина
-        - country: Страна производства
-        - warranty: Гарантия
-        - brand: Бренд
-        - description: Описание
-        - price: Цена
-        - main_image: Основное изображение
-        - photo1: Фото 1
-        - photo2: Фото 2
-        - photo3: Фото 3
-        - photo4: Фото 4
-        - photo5: Фото 5
-        - photo6: Фото 6
-        - photo7: Фото 7
-        - photo8: Фото 8
-        - photo9: Фото 9
-        - photo10: Фото 10
-        - photo11: Фото 11
-        - photo12: Фото 12
-        - photo13: Фото 13
-        - photo14: Фото 14
-        - photo15: Фото 15
-        - photo16: Фото 16
-        - photo17: Фото 17
-        - photo18: Фото 18
-        - photo19: Фото 19
-        - photo20: Фото 20
-        Form Overrides
-        --------------
-        - main_image: FileUploadField
-        - photo1: FileUploadField
-        - photo2: FileUploadField
-        - photo3: FileUploadField
-        - photo4: FileUploadField
-        - photo5: FileUploadField
-        - photo6: FileUploadField
-        - photo7: FileUploadField
-        - photo8: FileUploadField
-        - photo9: FileUploadField
-        - photo10: FileUploadField
-        - photo11: FileUploadField
-        - photo12: FileUploadField
-        - photo13: FileUploadField
-        - photo14: FileUploadField
-        - photo15: FileUploadField
-        - photo16: FileUploadField
-        - photo17: FileUploadField
-        - photo18: FileUploadField
-        - photo19: FileUploadField
-        - photo20: FileUploadField
-        Form Arguments
-        --------------
-        - main_image: {'label': 'Upload Main Image', 'base_path': app.config['UPLOAD_FOLDER'], 'allowed_extensions': {'png', 'jpg', 'jpeg', 'gif'}}
-        - photo1: {'label': 'Upload Photo 1', 'base_path': app.config['UPLOAD_FOLDER'], 'allowed_extensions': {'png', 'jpg', 'jpeg', 'gif'}}
-        - photo2: {'label': 'Upload Photo 2', 'base_path': app.config['UPLOAD_FOLDER'], 'allowed_extensions': {'png', 'jpg', 'jpeg', 'gif'}}
-        - photo3: {'label': 'Upload Photo 3', 'base_path': app.config['UPLOAD_FOLDER'], 'allowed_extensions': {'png', 'jpg', 'jpeg', 'gif'}}
-        - photo4: {'label': 'Upload Photo 4', 'base_path': app.config['UPLOAD_FOLDER'], 'allowed_extensions': {'png', 'jpg', 'jpeg', 'gif'}}
-        - photo5: {'label': 'Upload Photo 5', 'base_path': app.config['UPLOAD_FOLDER'], 'allowed_extensions': {'png', 'jpg', 'jpeg', 'gif'}}
-        - photo6: {'label': 'Upload Photo 6', 'base_path': app.config['UPLOAD_FOLDER'], 'allowed_extensions': {'png', 'jpg', 'jpeg', 'gif'}}
-        - photo7: {'label': 'Upload Photo 7', 'base_path': app.config['UPLOAD_FOLDER'], 'allowed_extensions': {'png', 'jpg', 'jpeg', 'gif'}}
-        - photo8: {'label': 'Upload Photo 8', 'base_path': app.config['UPLOAD_FOLDER'], 'allowed_extensions': {'png', 'jpg', 'jpeg', 'gif'}}
-        - photo9: {'label': 'Upload Photo 9', 'base_path': app.config['UPLOAD_FOLDER'], 'allowed_extensions': {'png', 'jpg', 'jpeg', 'gif'}}
-        - photo10: {'label': 'Upload Photo 10', 'base_path': app.config['UPLOAD_FOLDER'], 'allowed_extensions': {'png', 'jpg', 'jpeg', 'gif'}}
-        - photo11: {'label': 'Upload Photo 11', 'base_path': app.config['UPLOAD_FOLDER'], 'allowed_extensions': {'png', 'jpg', 'jpeg', 'gif'}}
-        - photo12: {'label': 'Upload Photo 12', 'base_path': app.config['UPLOAD_FOLDER'], 'allowed_extensions': {'png', 'jpg', 'jpeg', 'gif'}}
-        - photo13: {'label': 'Upload Photo 13', 'base_path': app.config['UPLOAD_FOLDER'], 'allowed_extensions': {'png', 'jpg', 'jpeg', 'gif'}}
-        - photo14: {'label': 'Upload Photo 14', 'base_path': app.config['UPLOAD_FOLDER'], 'allowed_extensions': {'png', 'jpg', 'jpeg', 'gif'}}
-        - photo15: {'label': 'Upload Photo 15', 'base_path': app.config['UPLOAD_FOLDER'], 'allowed_extensions': {'png', 'jpg', 'jpeg', 'gif'}}
-        - photo16: {'label': 'Upload Photo 16', 'base_path': app.config['UPLOAD_FOLDER'], 'allowed_extensions': {'png', 'jpg', 'jpeg', 'gif'}}
-        - photo17: {'label': 'Upload Photo 17', 'base_path': app.config['UPLOAD_FOLDER'], 'allowed_extensions': {'png', 'jpg', 'jpeg', 'gif'}}
-        - photo18: {'label': 'Upload Photo 18', 'base_path': app.config['UPLOAD_FOLDER'], 'allowed_extensions': {'png', 'jpg', 'jpeg', 'gif'}}
-        - photo19: {'label': 'Upload Photo 19', 'base_path': app.config['UPLOAD_FOLDER'], 'allowed_extensions': {'png', 'jpg', 'jpeg', 'gif'}}
-        - photo20: {'label': 'Upload Photo 20', 'base_path': app.config['UPLOAD_FOLDER'], 'allowed_extensions': {'png', 'jpg', 'jpeg', 'gif'}}
-        """
 
         column_labels = {
             'id': 'ID',
@@ -710,20 +541,6 @@ def admin_init(app, db):
         }
 
     class CartView(AdminModelView):
-        """
-        CartView is a subclass of AdminModelView that represents the administrative interface for managing cart items.
-        Attributes
-        
-        ----------
-        column_labels : dict
-            A dictionary mapping model field names to their corresponding labels in the admin interface.
-            The keys are:
-                - 'id': 'ID'
-                - 'user_id': 'ID Пользователя'
-                - 'lamp_id': 'ID Лампы'
-                - 'lamp': 'Лампа'
-                - 'count': 'Количество'
-        """
 
         column_labels = {
             'id': 'ID',
