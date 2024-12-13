@@ -3,16 +3,18 @@ from models import db
 from .config import Config
 from datetime import datetime
 
+
 def create_initial_admin(app, db):
     """
-    Создает начального администратора в базе данных.
-    Аргументы:
-        app: объект приложения Flask
-        db: объект базы данных SQLAlchemy
-    Функция проверяет, существует ли пользователь с заданным именем пользователя и электронной почтой.
-    Если такой пользователь не найден, создается новый пользователь с правами администратора и добавляется в базу данных.
+    Create an initial admin user if one does not already exist.
+    This function checks if a user with the username and email specified in the
+    Config class exists in the database. If not, it creates a new admin user
+    with the specified credentials and adds it to the database.
+    :param app: The Flask application instance.
+    :type app: Flask
+    :param db: The database instance.
+    :type db: SQLAlchemy
     """
-
 
     print(Config.ADMIN_NAME, Config.ADMIN_EMAIL, Config.ADMIN_PASSWD)
 

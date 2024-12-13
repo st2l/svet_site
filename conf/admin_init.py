@@ -12,37 +12,6 @@ import requests
 
 
 def admin_init(app, db):
-    """
-    Initializes the admin interface for the Flask application.
-    This function sets up the Flask-Admin interface, including custom views for managing
-    categories, subcategories, subsubcategories, lamps, and cart items. It also configures
-    the admin index view with custom routes for handling Excel file uploads and image downloads.
-        app (Flask): The Flask application instance.
-        db (SQLAlchemy): The SQLAlchemy database instance.
-
-    Classes:
-        MyAdminIndexView(AdminIndexView): Custom admin index view with methods for handling
-            Excel file uploads and image downloads.
-        AdminModelView(ModelView): Base admin model view with access control.
-        CategoryAdmin(AdminModelView): Admin view for managing categories.
-        SubCategoryAdmin(AdminModelView): Admin view for managing subcategories.
-        SubSubCategoryAdmin(AdminModelView): Admin view for managing subsubcategories.
-        LampView(AdminModelView): Admin view for managing lamps with file upload fields.
-        CartView(AdminModelView): Admin view for managing cart items.
-    Methods:
-        MyAdminIndexView.index(): Renders the custom admin index page.
-        MyAdminIndexView.merge_excel(): Handles Excel file uploads and processes the data.
-        MyAdminIndexView.download_image(url, save_path): Downloads an image from a URL and saves it.
-        MyAdminIndexView.process_excel_data(df): Processes data from an Excel DataFrame and saves it to the database.
-        MyAdminIndexView.is_accessible(): Checks if the admin interface is accessible to the current user.
-        MyAdminIndexView.inaccessible_callback(name, **kwargs): Redirects to the login page if access is denied.
-        AdminModelView.is_accessible(): Checks if the admin model view is accessible to the current user.
-        AdminModelView.inaccessible_callback(name, **kwargs): Redirects to the login page if access is denied.
-    Notes:
-        - The function configures Flask-Admin with Bootstrap 4 templates.
-        - The function ensures that only authenticated admin users can access the admin interface.
-        - The function sets up file upload fields for lamp images with specific allowed extensions.
-    """
 
     # flask-admin configuration
 
