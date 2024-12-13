@@ -1,7 +1,8 @@
 name: apidocs
 on:
   push:
-    branches: [main]
+    branches:
+    - master
 
 jobs:
   deploy:
