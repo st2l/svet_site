@@ -6,7 +6,7 @@ Site for internet-shop for street lights.
 It is on github ***ONLY for educational purposes***!!!
 It can't be used by anyone without [author](https://github.com/st2l) permission!
 
-> Documentation to code is paced [here](https://st2l.github.io).
+> Documentation to code is paced [here](https://st2l.github.io/svet_site/).
 
 ## Deploy
 
