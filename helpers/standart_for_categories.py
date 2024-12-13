@@ -6,20 +6,23 @@ from models import Category, SubCategory, SubSubCategory, CartItem, Lamp
 
 def filter_params():
     """
-    Фильтрует параметры для категорий и корзины.
-    Возвращает словарь с параметрами, включающими категории, подкатегории, 
-    под-подкатегории, элементы корзины и информацию о текущем пользователе.
-    Возвращаемое значение:
-        dict: Словарь с параметрами:
-            - categories (list): Список всех категорий.
-            - subcategories_names (list): Список имен всех подкатегорий.
-            - subcategories (list): Список всех подкатегорий.
-            - sub_subcategories (list): Список всех под-подкатегорий.
-            - cart_items (list): Список элементов корзины текущего пользователя.
-            - current_user (User): Текущий пользователь.
-            - len_cart_items (int): Количество элементов в корзине.
-            - full_price (float): Общая стоимость всех элементов в корзине.
+    Retrieves and filters parameters for categories, subcategories, and cart items.
+    This function gathers all categories, subcategories, and sub-subcategories from the database.
+    It also attempts to retrieve all items from the cart if the user is logged in, and calculates
+    the total price of the items in the cart.
+    
+    Returns:
+        dict: A dictionary containing the following keys:
+            - 'categories': List of all Category objects.
+            - 'subcategories_names': List of names of all SubCategory objects.
+            - 'subcategories': List of all SubCategory objects.
+            - 'sub_subcategories': List of all SubSubCategory objects.
+            - 'cart_items': List of CartItem objects if the user is logged in, otherwise an empty list.
+            - 'current_user': The current user object.
+            - 'len_cart_items': The number of items in the cart.
+            - 'full_price': The total price of all items in the cart.
     """
+    
     
 
     params = {}

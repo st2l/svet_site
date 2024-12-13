@@ -7,17 +7,18 @@ from loguru import logger
 
 def send_email(to_address, subject, message):
     """
-    Отправляет электронное письмо на указанный адрес.
-    Параметры:
-        to_address (str): Адрес электронной почты получателя.
-        subject (str): Тема письма.
-        message (str): Текст сообщения.
-    Исключения:
-        Exception: Если отправка письма не удалась, выбрасывается исключение с описанием ошибки.
-    Возвращает:
-        None
+    Sends an email using the specified parameters.
+    
+    :param to_address: The recipient's email address.
+    :type to_address: str
+    :param subject: The subject of the email.
+    :type subject: str
+    :param message: The body of the email.
+    :type message: str
+    :raises Exception: If there is an error sending the email.
+    :return: None
     """
-
+    
 
     from_address = Config.SYSTEM_EMAIL
     password = Config.SYSTEM_EMAIL_PASSWD

@@ -13,64 +13,83 @@ import requests
 
 def admin_init(app, db):
     """
-    Инициализирует административную панель для приложения Flask.
-    Аргументы:
-        app (Flask): Экземпляр приложения Flask.
-        db (SQLAlchemy): Экземпляр базы данных SQLAlchemy.
-    Внутренние классы:
-        MyAdminIndexView (AdminIndexView): Кастомизированный класс для главной страницы административной панели.
-        AdminModelView (ModelView): Базовый класс для создания административных интерфейсов для моделей.
-        CategoryAdmin (AdminModelView): Административный интерфейс для управления категориями.
-        SubCategoryAdmin (AdminModelView): Административный интерфейс для управления подкатегориями.
-        SubSubCategoryAdmin (AdminModelView): Административный интерфейс для управления подподкатегориями.
-        LampView (AdminModelView): Административный интерфейс для управления лампами.
-        CartView (AdminModelView): Административный интерфейс для управления корзинами.
-        download_image(url, save_path): Загружает изображение по указанному URL и сохраняет его по указанному пути.
-        process_excel_data(df): Обрабатывает данные из Excel файла и сохраняет их в базу данных.
+    Initializes the admin interface for the Flask application.
+    This function sets up the Flask-Admin interface, including custom views for managing
+    categories, subcategories, subsubcategories, lamps, and cart items. It also configures
+    the admin index view with custom routes for handling Excel file uploads and image downloads.
+        app (Flask): The Flask application instance.
+        db (SQLAlchemy): The SQLAlchemy database instance.
+
+    Classes:
+        MyAdminIndexView(AdminIndexView): Custom admin index view with methods for handling
+            Excel file uploads and image downloads.
+        AdminModelView(ModelView): Base admin model view with access control.
+        CategoryAdmin(AdminModelView): Admin view for managing categories.
+        SubCategoryAdmin(AdminModelView): Admin view for managing subcategories.
+        SubSubCategoryAdmin(AdminModelView): Admin view for managing subsubcategories.
+        LampView(AdminModelView): Admin view for managing lamps with file upload fields.
+        CartView(AdminModelView): Admin view for managing cart items.
+    Methods:
+        MyAdminIndexView.index(): Renders the custom admin index page.
+        MyAdminIndexView.merge_excel(): Handles Excel file uploads and processes the data.
+        MyAdminIndexView.download_image(url, save_path): Downloads an image from a URL and saves it.
+        MyAdminIndexView.process_excel_data(df): Processes data from an Excel DataFrame and saves it to the database.
+        MyAdminIndexView.is_accessible(): Checks if the admin interface is accessible to the current user.
+        MyAdminIndexView.inaccessible_callback(name, **kwargs): Redirects to the login page if access is denied.
+        AdminModelView.is_accessible(): Checks if the admin model view is accessible to the current user.
+        AdminModelView.inaccessible_callback(name, **kwargs): Redirects to the login page if access is denied.
+    Notes:
+        - The function configures Flask-Admin with Bootstrap 4 templates.
+        - The function ensures that only authenticated admin users can access the admin interface.
+        - The function sets up file upload fields for lamp images with specific allowed extensions.
     """
 
     # flask-admin configuration
 
     class MyAdminIndexView(AdminIndexView):
         """
-        Класс MyAdminIndexView предоставляет пользовательский интерфейс администратора с возможностью загрузки и обработки данных из Excel файлов, а также загрузки изображений.
-        Методы:
-            index():
-                Отображает главную страницу пользовательского интерфейса администратора.
-            merge_excel():
-                Обрабатывает загрузку Excel файла, извлекает данные и вызывает метод process_excel_data для обработки данных.
-            download_image(url, save_path):
-                Загружает изображение по указанному URL и сохраняет его по указанному пути.
-            process_excel_data(df):
-                Обрабатывает данные из DataFrame, извлеченного из Excel файла, и сохраняет их в базе данных.
-            is_accessible():
-                Проверяет, доступен ли интерфейс администратора для текущего пользователя.
-            inaccessible_callback(name, **kwargs):
-                Перенаправляет пользователя на страницу входа, если доступ к интерфейсу администратора запрещен.
+        Custom admin index view for the administrative panel.
+
+        Methods
+        -------
+        index():
+            Returns the HTML page for the custom admin panel.
+        merge_excel():
+            Handles the POST request for uploading and processing an Excel file.
+        download_image(url, save_path):
+            Downloads an image from the given URL and saves it to the specified path.
+        process_excel_data(df):
+            Processes data from an Excel file and saves it to the database.
+        is_accessible():
+            Determines if the resource is accessible to the current user.
+        inaccessible_callback(name, **kwargs):
+            Redirects the user to the login page if access is denied.
         """
+        
 
         @expose('/')
         def index(self):
             """
-            Возвращает HTML-страницу для пользовательской административной панели.
-            Возвращает:
-                str: HTML-код страницы 'admin/custom_admin.html'.
+            Renders the custom admin page.
+
+            :return: Rendered HTML for the custom admin page.
+            :rtype: str
             """
+            
             return self.render('admin/custom_admin.html')
 
         @expose('/merge_excel', methods=['GET', 'POST'])
         def merge_excel(self):
             """
-            Обрабатывает POST-запрос для загрузки и обработки Excel файла.
-            Метод выполняет следующие действия:
-            1. Проверяет, является ли метод запроса POST.
-            2. Получает файл из запроса.
-            3. Если файл существует, считывает его в DataFrame с помощью pandas.
-            4. Вызывает метод process_excel_data для обработки данных из DataFrame.
-            5. Возвращает HTML-шаблон 'admin/merge_excel.html'.
-            Returns:
-                str: HTML-шаблон 'admin/merge_excel.html'.
+            Handle the merging of an Excel file uploaded via a POST request.
+            This method processes an uploaded Excel file and calls the 
+            `process_excel_data` method to handle the data. It renders the 
+            'admin/merge_excel.html' template for the response.
+
+            :return: Rendered HTML template for merging Excel files.
+            :rtype: str
             """
+            
 
             if request.method == 'POST':
                 file = request.files['excel_file']
@@ -81,13 +100,16 @@ def admin_init(app, db):
 
         def download_image(self, url, save_path):
             """
-            Загружает изображение по указанному URL и сохраняет его в указанное место.
-            Args:
-                url (str): URL изображения для загрузки.
-                save_path (str): Путь для сохранения загруженного изображения.
-            Returns:
-                bool: Возвращает True, если изображение успешно загружено и сохранено, иначе False.
+            Downloads an image from the given URL and saves it to the specified path.
+
+            :param url: The URL of the image to download.
+            :type url: str
+            :param save_path: The local file path where the image will be saved.
+            :type save_path: str
+            :return: True if the image was successfully downloaded and saved, False otherwise.
+            :rtype: bool
             """
+            
 
             response = requests.get(url)
             if response.status_code == 200:
@@ -98,18 +120,17 @@ def admin_init(app, db):
 
         def process_excel_data(self, df):
             """
-            Обрабатывает данные из Excel и сохраняет их в базе данных.
-            Аргументы:
-                df (pandas.DataFrame): DataFrame, содержащий данные из Excel.
-            Обработка:
-                - Перебирает строки DataFrame.
-                - Извлекает и обрабатывает данные о категориях, подкатегориях и подподкатегориях.
-                - Извлекает и обрабатывает данные о лампах.
-                - Загружает изображения и сохраняет их пути.
-                - Сохраняет данные о категориях, подкатегориях, подподкатегориях и лампах в базе данных.
-            Исключения:
-                - Обрабатывает исключения при загрузке изображений и сохраняет None в случае ошибки.
+            Process the given Excel data and populate the database with lamp information.
+            This method iterates through each row of the provided DataFrame, extracts lamp data,
+            processes image URLs, and saves the data into the database. It also handles the creation
+            of categories, subcategories, and subsubcategories if they do not already exist.
+            
+            :param df: pandas DataFrame containing the Excel data to be processed.
+            :type df: pandas.DataFrame
+            :raises Exception: If there is an error while downloading images or saving data to the database.
+            :return: None
             """
+            
 
             i = 0
             for _, row in df.iterrows():
@@ -225,23 +246,31 @@ def admin_init(app, db):
 
         def is_accessible(self):
             """
-            Определяет, доступен ли ресурс для текущего пользователя.
-            Возвращает:
-                bool: True, если пользователь авторизован и является администратором, иначе False.
+            Check if the current user is authorized to access the admin interface.
+            
+            :return: True if the current user is authenticated and has admin privileges, False otherwise.
+            :rtype: bool
             """
+            
 
             # Доступ только для авторизованных пользователей
             return current_user.is_authenticated and current_user.admin
 
         def inaccessible_callback(self, name, **kwargs):
             """
-            Перенаправляет пользователя на страницу входа, если доступ запрещен.
-            Args:
-                name (str): Имя ресурса, к которому был запрещен доступ.
-                **kwargs: Дополнительные аргументы.
-            Returns:
-                werkzeug.wrappers.Response: Ответ с перенаправлением на страницу входа.
+            Callback function to handle inaccessible routes.
+            This function is triggered when a user tries to access a route
+            they do not have permission to view. It redirects the user to
+            the login page.
+
+            :param name: The name of the route that was attempted to be accessed.
+            :type name: str
+            :param kwargs: Additional keyword arguments.
+            :type kwargs: dict
+            :return: A redirect response to the login page.
+            :rtype: werkzeug.wrappers.Response
             """
+            
 
             # Перенаправление на страницу входа, если доступ запрещен
             return redirect('/login')
@@ -251,50 +280,71 @@ def admin_init(app, db):
 
     class AdminModelView(ModelView):
         """
-        Класс AdminModelView предоставляет административный интерфейс для управления моделями.
-        Атрибуты:
-            column_display_pk (bool): Опционально, отображает первичные ключи в списке.
-            column_hide_backrefs (bool): Определяет, скрывать ли обратные ссылки.
-        Методы:
-            is_accessible(): Проверяет, доступен ли интерфейс для текущего пользователя.
-            inaccessible_callback(name, **kwargs): Перенаправляет на страницу входа, если доступ запрещен.
+        Custom admin model view for managing access and display settings.
+
+        Attributes:
+            column_display_pk (bool): Whether to display primary keys in the list view.
+            column_hide_backrefs (bool): Whether to hide back references in the list view.
+        Methods:
+            is_accessible():
+                Determines if the current user has access to the admin view.
+                    bool: True if the current user is authenticated and an admin, False otherwise.
+            inaccessible_callback(name, **kwargs):
+                Redirects the user to the login page if access is denied.
+                    name (str): The name of the resource that was denied access.
+                    **kwargs: Additional arguments.
+                    redirect: A response that redirects to the login page.
         """
+        
 
         column_display_pk = True  # optional, but I like to see the IDs in the list
         column_hide_backrefs = False
 
         def is_accessible(self):
             """
-            Определяет доступность для пользователя.
-            Возвращает True, если текущий пользователь авторизован и является администратором.
-            Returns:
-                bool: Доступность для пользователя.
+            Determine if the current user has access.
+
+            :return: True if the current user is authenticated and an admin, False otherwise.
+            :rtype: bool
+            .. note::
+                Access is granted only to authenticated users with admin privileges.
             """
+            
 
             # Доступ только для авторизованных пользователей
             return current_user.is_authenticated and current_user.admin
 
         def inaccessible_callback(self, name, **kwargs):
             """
-            Перенаправляет пользователя на страницу входа, если доступ запрещен.
-            Args:
-                name (str): Имя ресурса, к которому был запрещен доступ.
-                **kwargs: Дополнительные аргументы.
-            Returns:
-                redirect: Ответ с перенаправлением на страницу входа.
+            Callback function that handles inaccessible routes.
+            This function is triggered when a user tries to access a route
+            they do not have permission to view. It redirects the user to
+            the login page.
+
+            :param name: The name of the route that was attempted to be accessed.
+            :type name: str
+            :param kwargs: Additional keyword arguments.
+            :type kwargs: dict
+            :return: A redirect response to the login page.
+            :rtype: werkzeug.wrappers.Response
             """
+            
 
             # Перенаправление на страницу входа, если доступ запрещен
             return redirect('/login')
 
     class CategoryAdmin(AdminModelView):
         """
-        Класс CategoryAdmin представляет административный интерфейс для управления категориями.
-        Атрибуты:
-            column_labels (dict): Словарь, содержащий метки для столбцов в административном интерфейсе.
-                'id' (str): Метка для столбца идентификатора.
-                'name' (str): Метка для столбца названия.
+        CategoryAdmin is a subclass of AdminModelView that customizes the
+        admin interface for the Category model.
+        Attributes
+        ----------
+        column_labels : dict
+            A dictionary that maps model field names to their corresponding
+            labels in the admin interface. In this case, 'id' is labeled as 'ID'
+            and 'name' is labeled as 'Название'.
         """
+        
 
         column_labels = {
             'id': 'ID',
@@ -303,14 +353,19 @@ def admin_init(app, db):
 
     class SubCategoryAdmin(AdminModelView):
         """
-        Класс SubCategoryAdmin представляет административный интерфейс для управления подкатегориями.
-        Атрибуты:
-            column_labels (dict): Словарь, содержащий метки для столбцов в административном интерфейсе.
-                'id' (str): Метка для идентификатора подкатегории.
-                'name' (str): Метка для названия подкатегории.
-                'category_id' (str): Метка для идентификатора категории.
-                'category' (str): Метка для категории.
+        SubCategoryAdmin is a custom admin view for managing subcategories.
+        Attributes
+        ----------
+        column_labels : dict
+            A dictionary mapping model field names to their corresponding labels
+            for display in the admin interface. The keys are the field names and
+            the values are the labels.
+            - 'id': 'ID'
+            - 'name': 'Название'
+            - 'category_id': 'ID Категории'
+            - 'category': 'Категория'
         """
+        
 
         column_labels = {
             'id': 'ID',
@@ -321,14 +376,19 @@ def admin_init(app, db):
 
     class SubSubCategoryAdmin(AdminModelView):
         """
-        Класс SubSubCategoryAdmin представляет административный интерфейс для управления подкатегориями.
-        Атрибуты:
-            column_labels (dict): Словарь, содержащий метки для столбцов в административном интерфейсе.
-                'id' (str): Метка для идентификатора подкатегории.
-                'name' (str): Метка для названия подкатегории.
-                'subcategory_id' (str): Метка для идентификатора родительской подкатегории.
-                'subcategory' (str): Метка для родительской подкатегории.
+        SubSubCategoryAdmin is a custom admin view for managing sub-subcategories.
+        Attributes
+        ----------
+        column_labels : dict
+            A dictionary that maps the model field names to their corresponding labels
+            in the admin interface. The keys are the field names and the values are the
+            labels to be displayed.
+            - 'id': 'ID'
+            - 'name': 'Название'
+            - 'subcategory_id': 'ID Подкатегории'
+            - 'subcategory': 'Подкатегория'
         """
+        
 
         column_labels = {
             'id': 'ID',
@@ -338,6 +398,127 @@ def admin_init(app, db):
         }
 
     class LampView(AdminModelView):
+        """
+        LampView class for managing lamp-related data in the admin interface.
+        This class extends the AdminModelView and provides custom configurations
+        for displaying and handling lamp data, including column labels, form overrides,
+        and form arguments for file upload fields.
+
+        Attributes
+        ----------
+        column_labels : dict
+            A dictionary mapping model field names to their corresponding labels
+            in the admin interface.
+        form_overrides : dict
+            A dictionary specifying custom form fields for certain model fields.
+        form_args : dict
+            A dictionary specifying additional arguments for form fields, such as
+            labels, base paths for file uploads, and allowed file extensions.
+        Column Labels
+        -------------
+        - id: ID
+        - subsubcategory_id: ID Подподкатегории
+        - subsubcategory: Подподкатегория
+        - model: Модель
+        - article: Артикул
+        - availability: Наличие
+        - series: Серия
+        - name: Наименование
+        - style: Стиль
+        - body_color: Цвет корпуса
+        - shade_color: Цвет плафона
+        - body_material: Материал корпуса
+        - shade_material: Материал плафона
+        - head_shape: Форма головы
+        - install_type: Тип установки
+        - mount_type: Тип крепления
+        - bracket_count: Количество кронштейнов
+        - lamp_count: Количество ламп
+        - socket_type: Цоколь
+        - lamp_type: Тип ламп
+        - max_power: Макс. мощность
+        - voltage: Напряжение
+        - ip_protection: Степень защиты IP
+        - weight: Вес
+        - height: Высота
+        - width: Ширина
+        - diameter: Диаметр
+        - length: Длина
+        - depth: Глубина
+        - country: Страна производства
+        - warranty: Гарантия
+        - brand: Бренд
+        - description: Описание
+        - price: Цена
+        - main_image: Основное изображение
+        - photo1: Фото 1
+        - photo2: Фото 2
+        - photo3: Фото 3
+        - photo4: Фото 4
+        - photo5: Фото 5
+        - photo6: Фото 6
+        - photo7: Фото 7
+        - photo8: Фото 8
+        - photo9: Фото 9
+        - photo10: Фото 10
+        - photo11: Фото 11
+        - photo12: Фото 12
+        - photo13: Фото 13
+        - photo14: Фото 14
+        - photo15: Фото 15
+        - photo16: Фото 16
+        - photo17: Фото 17
+        - photo18: Фото 18
+        - photo19: Фото 19
+        - photo20: Фото 20
+        Form Overrides
+        --------------
+        - main_image: FileUploadField
+        - photo1: FileUploadField
+        - photo2: FileUploadField
+        - photo3: FileUploadField
+        - photo4: FileUploadField
+        - photo5: FileUploadField
+        - photo6: FileUploadField
+        - photo7: FileUploadField
+        - photo8: FileUploadField
+        - photo9: FileUploadField
+        - photo10: FileUploadField
+        - photo11: FileUploadField
+        - photo12: FileUploadField
+        - photo13: FileUploadField
+        - photo14: FileUploadField
+        - photo15: FileUploadField
+        - photo16: FileUploadField
+        - photo17: FileUploadField
+        - photo18: FileUploadField
+        - photo19: FileUploadField
+        - photo20: FileUploadField
+        Form Arguments
+        --------------
+        - main_image: {'label': 'Upload Main Image', 'base_path': app.config['UPLOAD_FOLDER'], 'allowed_extensions': {'png', 'jpg', 'jpeg', 'gif'}}
+        - photo1: {'label': 'Upload Photo 1', 'base_path': app.config['UPLOAD_FOLDER'], 'allowed_extensions': {'png', 'jpg', 'jpeg', 'gif'}}
+        - photo2: {'label': 'Upload Photo 2', 'base_path': app.config['UPLOAD_FOLDER'], 'allowed_extensions': {'png', 'jpg', 'jpeg', 'gif'}}
+        - photo3: {'label': 'Upload Photo 3', 'base_path': app.config['UPLOAD_FOLDER'], 'allowed_extensions': {'png', 'jpg', 'jpeg', 'gif'}}
+        - photo4: {'label': 'Upload Photo 4', 'base_path': app.config['UPLOAD_FOLDER'], 'allowed_extensions': {'png', 'jpg', 'jpeg', 'gif'}}
+        - photo5: {'label': 'Upload Photo 5', 'base_path': app.config['UPLOAD_FOLDER'], 'allowed_extensions': {'png', 'jpg', 'jpeg', 'gif'}}
+        - photo6: {'label': 'Upload Photo 6', 'base_path': app.config['UPLOAD_FOLDER'], 'allowed_extensions': {'png', 'jpg', 'jpeg', 'gif'}}
+        - photo7: {'label': 'Upload Photo 7', 'base_path': app.config['UPLOAD_FOLDER'], 'allowed_extensions': {'png', 'jpg', 'jpeg', 'gif'}}
+        - photo8: {'label': 'Upload Photo 8', 'base_path': app.config['UPLOAD_FOLDER'], 'allowed_extensions': {'png', 'jpg', 'jpeg', 'gif'}}
+        - photo9: {'label': 'Upload Photo 9', 'base_path': app.config['UPLOAD_FOLDER'], 'allowed_extensions': {'png', 'jpg', 'jpeg', 'gif'}}
+        - photo10: {'label': 'Upload Photo 10', 'base_path': app.config['UPLOAD_FOLDER'], 'allowed_extensions': {'png', 'jpg', 'jpeg', 'gif'}}
+        - photo11: {'label': 'Upload Photo 11', 'base_path': app.config['UPLOAD_FOLDER'], 'allowed_extensions': {'png', 'jpg', 'jpeg', 'gif'}}
+        - photo12: {'label': 'Upload Photo 12', 'base_path': app.config['UPLOAD_FOLDER'], 'allowed_extensions': {'png', 'jpg', 'jpeg', 'gif'}}
+        - photo13: {'label': 'Upload Photo 13', 'base_path': app.config['UPLOAD_FOLDER'], 'allowed_extensions': {'png', 'jpg', 'jpeg', 'gif'}}
+        - photo14: {'label': 'Upload Photo 14', 'base_path': app.config['UPLOAD_FOLDER'], 'allowed_extensions': {'png', 'jpg', 'jpeg', 'gif'}}
+        - photo15: {'label': 'Upload Photo 15', 'base_path': app.config['UPLOAD_FOLDER'], 'allowed_extensions': {'png', 'jpg', 'jpeg', 'gif'}}
+        - photo16: {'label': 'Upload Photo 16', 'base_path': app.config['UPLOAD_FOLDER'], 'allowed_extensions': {'png', 'jpg', 'jpeg', 'gif'}}
+        - photo17: {'label': 'Upload Photo 17', 'base_path': app.config['UPLOAD_FOLDER'], 'allowed_extensions': {'png', 'jpg', 'jpeg', 'gif'}}
+        - photo18: {'label': 'Upload Photo 18', 'base_path': app.config['UPLOAD_FOLDER'], 'allowed_extensions': {'png', 'jpg', 'jpeg', 'gif'}}
+        - photo19: {'label': 'Upload Photo 19', 'base_path': app.config['UPLOAD_FOLDER'], 'allowed_extensions': {'png', 'jpg', 'jpeg', 'gif'}}
+        - photo20: {'label': 'Upload Photo 20', 'base_path': app.config['UPLOAD_FOLDER'], 'allowed_extensions': {'png', 'jpg', 'jpeg', 'gif'}}
+        """
+
         column_labels = {
             'id': 'ID',
             'subsubcategory_id': 'ID Подподкатегории',
@@ -529,6 +710,21 @@ def admin_init(app, db):
         }
 
     class CartView(AdminModelView):
+        """
+        CartView is a subclass of AdminModelView that represents the administrative interface for managing cart items.
+        Attributes
+        
+        ----------
+        column_labels : dict
+            A dictionary mapping model field names to their corresponding labels in the admin interface.
+            The keys are:
+                - 'id': 'ID'
+                - 'user_id': 'ID Пользователя'
+                - 'lamp_id': 'ID Лампы'
+                - 'lamp': 'Лампа'
+                - 'count': 'Количество'
+        """
+
         column_labels = {
             'id': 'ID',
             'user_id': 'ID Пользователя',
