@@ -52,30 +52,32 @@
 									<form action="/cart/decrease/{{ item.id }}" method="post">
 										{% if item.amount == 1 %}
 										<div class="button minus">
-												<button type="button" class="btn btn-primary"
-													disabled="disabled">
-													<i class="ti-minus"></i>
-												</button>
+											<button type="button" class="btn btn-primary" disabled="disabled">
+												<i class="ti-minus"></i>
+											</button>
 										</div>
 										{% else %}
 										<div class="button minus">
-											<button type="submit" class="btn btn-primary">
-												<i class="ti-minus"></i>
+											<button type="button" class="btn btn-primary">
+												<i class="ti-minus" onclick="decreaseValue(this)"></i>
 											</button>
+											<!-- <button type="submit" class="btn btn-primary">
+												<i class="ti-minus"></i>
+											</button> -->
 										</div>
 										{% endif %}
 									</form>
 
-									<input type="text" class="input-number" data-min="1" data-max="100"
-										value="{{ item.amount }}">
+									<input id="amount-number" type="text" class="input-number" data-min="1"
+										data-max="100" value="{{ item.amount }}">
 
 									<form action="/cart/increase/{{ item.id }}" method="post">
 										<div class="button plus">
-											<button type="submit" class="btn btn-primary">
-												<i class="ti-plus"></i>
+											<button type="button" class="btn btn-primary">
+												<i class="ti-plus" onclick="increaseValue(this)"></i>
 											</button>
 										</div>
-								<!--/ End Input Order -->
+										<!--/ End Input Order -->
 							</td>
 							<td class="total-amount" data-title="Total"><span>{{ item.amount * item.lamp.price }}
 									руб.</span></td>
@@ -94,11 +96,11 @@
 				<!-- Total Amount -->
 				<div class="total-amount">
 					<div class="row">
-						
+
 						<div class="col-lg-4 col-md-7 col-12">
 							<div class="right">
 								<ul>
-									
+
 									<li class="last">Итого:<span>{{ full_price }} руб.</span></li>
 								</ul>
 								<div class="button5">
@@ -282,5 +284,59 @@
 	</div>
 </div>
 <!-- Modal end -->
+
+
+<script>
+
+	function increaseValue(element) {
+		const input = element.parentElement.parentElement.parentElement.parentElement.querySelector('.input-number');
+		const max = parseInt(input.getAttribute('data-max'));
+		let value = parseInt(input.value);
+
+		if (value < max) {
+			value++;
+			input.value = value;
+		}
+		lamp_id = element.parentElement.parentElement.parentElement.getAttribute('action').split('/')[3];
+		$.ajax({
+			url: '/cart/increase/' + lamp_id,
+			type: 'GET',
+			success: function (response) {
+				document.getElementById('popup').style.display = 'block';
+			},
+			error: function (response) {
+
+			}
+		});
+	}
+
+	function decreaseValue(element) {
+
+
+		const input = element.parentElement.parentElement.parentElement.parentElement.querySelector('.input-number');
+		const min = parseInt(input.getAttribute('data-min'));
+		let value = parseInt(input.value);
+
+		if (value == 1){	
+			return;
+		}
+
+		if (value > min) {
+			value--;
+			input.value = value;
+		}
+		lamp_id = element.parentElement.parentElement.parentElement.getAttribute('action').split('/')[3];
+		$.ajax({
+			url: '/cart/decrease/' + lamp_id,
+			type: 'GET',
+			success: function (response) {
+				document.getElementById('popup').style.display = 'block';
+			},
+			error: function (response) {
+
+			}
+		});
+	}
+</script>
 
 {% endblock %}
