@@ -1,5 +1,6 @@
 {% extends 'header.html' %}
 {% block content %}
+
 <!-- Slider Area -->
 <section class="hero-slider">
 	<!-- Single Slider -->
@@ -90,15 +91,16 @@
 					{% for lamp in lamps %}
 
 					<!-- Start Single Product -->
+
 					<div class="single-product">
 						<div class="product-img">
 							<a href="/lamp/{{ lamp.id }}">
 								{% if lamp.main_image %}
-									<img class="default-img" src="/static/img/{{ lamp.main_image }}" alt="#">
-									<img class="hover-img" src="/static/img/{{ lamp.photo1 }}" alt="#">
+								<img class="default-img" src="/static/img/{{ lamp.main_image }}" alt="{{ lamp.model }}">
+								<img class="hover-img" src="/static/img/{{ lamp.photo1 }}" alt="{{ lamp.model }}">
 								{% else %}
-								<img class="default-img" src="/static/img/{{ lamp.photo1 }}" alt="#">
-									<img class="hover-img" src="/static/img/{{ lamp.photo2 }}" alt="#">
+								<img class="default-img" src="/static/img/{{ lamp.photo1 }}" alt="{{ lamp.model }}">
+								<img class="hover-img" src="/static/img/{{ lamp.photo2 }}" alt="{{ lamp.model }}">
 								{% endif %}
 								{% if lamp.id % 228 == 16 %}
 								<span class="out-of-stock">Популярно</span>
@@ -106,7 +108,7 @@
 							</a>
 							<div class="button-head">
 								<div class="product-action-2">
-									<a title="Add to cart" href="/add_to_cart/{{ lamp.id }}">Добавить в корзину</a>
+									<a title="Add to cart" onclick="addToCart({{ lamp.id }});">Добавить в корзину</a>
 								</div>
 							</div>
 						</div>
@@ -114,7 +116,7 @@
 							<h3><a href="/lamp/{{ lamp.id }}">{{ lamp.name }}</a></h3>
 							<div class="product-price">
 								{% if lamp.id % 228 == 16 %}
-									<span class="old">{{ lamp.price + 1000 }}</span>
+								<span class="old">{{ lamp.price + 1000 }}</span>
 								{% endif %}
 								<span>{{ lamp.price }}</span>
 							</div>
@@ -137,16 +139,19 @@
 					<span class="text-white wow fadeInDown" data-wow-delay=".2s"
 						style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInDown;">"МастерСвета"</span>
 					<h2 class="text-white wow " data-wow-delay=".4s"
-						style="visibility: visible; animation-delay: 0.4s; animation-name: fadeInUp;">Официальный представитель Fumagalli</h2>
+						style="visibility: visible; animation-delay: 0.4s; animation-name: fadeInUp;">Официальный
+						представитель Fumagalli</h2>
 					<p class="text-white wow fadeInUp" data-wow-delay=".6s"
-						style="visibility: visible; animation-delay: 0.6s; animation-name: fadeInUp;">Если Вы или Ваша компания заинтересованы в поставках уличного
+						style="visibility: visible; animation-delay: 0.6s; animation-name: fadeInUp;">Если Вы или Ваша
+						компания заинтересованы в поставках уличного
 						и ландшафтного освещения ФУМАГАЛЛИ, ведете проекты по светотехнике, занимаетесь
-						 монтажом или обслуживанием садовых и парковых фонарей
-						  - компания "МастерСвета" - официальный представитель FUMAGALLI  будет рада предложить Вам партнерство. </p>
+						монтажом или обслуживанием садовых и парковых фонарей
+						- компания "МастерСвета" - официальный представитель FUMAGALLI будет рада предложить Вам
+						партнерство. </p>
 
 					<div class="button">
-						<a href="/contact" target="_blank"
-							rel="nofollow" class="btn wow fadeInUp" data-wow-delay=".8s">Связаться с нами</a>
+						<a href="/contact" target="_blank" rel="nofollow" class="btn wow fadeInUp"
+							data-wow-delay=".8s">Связаться с нами</a>
 					</div>
 				</div>
 			</div>
@@ -154,5 +159,27 @@
 	</div>
 </section>
 
+{% for lamp in lamps %}
+<div id="popup" class="popup">
+	<div class="popup-content">
+		<span class="close-btn">&times;</span>
+		<div class="popup-body">
+			<div class="popup-image">
+				<img class="default-img" width="50%" height="50%" src="/static/img/{{ lamp.main_image }}"
+					alt="{{ lamp.model }}">
+			</div>
+			<div class="popup-info">
+				<p>Товар "{{ lamp.name }}" добавлен в корзину</p>
+				<div class="popup-buttons">
+					<div class="button">
+						<a href="/cart" class="btn">Перейти в корзину</a>
+						<a href="/lamp/{{ lamp.id }}" class="btn">Перейти к товару</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endfor %}
 
 {% endblock %}

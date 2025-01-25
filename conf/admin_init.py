@@ -170,6 +170,8 @@ def admin_init(app, db):
                     if str(lamp_data[key]) != 'nan':
                         try:
                             filename = f"{key}_{lamp_data['article']}.jpg"
+                            if not os.path.exists('static/img'):
+                                os.makedirs('static/img')
                             save_path = os.path.join('static', 'img', filename)
                             if self.download_image(lamp_data[key], save_path):
                                 lamp_data[key] = f"{key}_{lamp_data['article']}.jpg"

@@ -155,7 +155,7 @@
           <div style="padding: 10px;">
             <span>Выбрать кол-во можно будет в корзине.</span>
           </div>
-          <a href="/add_to_cart/{{ lamp.id }}">
+          <a onclick="addToCart({{ lamp.id }})">
             <div
               style="background-color: orange; padding: 1rem; text-align: center; color: white; margin: 1px; cursor: pointer; border-radius: 5px;">
               <span>Добавить в корзину</span>
@@ -225,5 +225,25 @@
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
+<div id="popup" class="popup">
+	<div class="popup-content">
+		<span class="close-btn">&times;</span>
+		<div class="popup-body">
+			<div class="popup-image">
+				<img class="default-img" width="50%" height="50%" src="/static/img/{{ lamp.main_image }}"
+					alt="{{ lamp.model }}">
+			</div>
+			<div class="popup-info">
+				<p>Товар "{{ lamp.name }}" добавлен в корзину</p>
+				<div class="popup-buttons">
+					<div class="button">
+						<a href="/cart" class="btn">Перейти в корзину</a>
+						<a href="/lamp/{{ lamp.id }}" class="btn">Перейти к товару</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
 {% endblock %}

@@ -4983,3 +4983,95 @@ Version:1.0
 	End Footer CSS
 ===============================*/
 
+
+.popup {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+	align-self: center;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.popup-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 60%; /* Could be more or less, depending on screen size */
+    text-align: center;
+}
+
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.popup-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.popup-info {
+    flex: 1;
+    text-align: left;
+}
+
+.popup-image {
+    flex: 1;
+    text-align: right;
+}
+
+.popup-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.popup-buttons .btn {
+
+	position: relative;
+	font-weight: 500;
+	font-size:14px;
+	color: #fff;
+	background: #333;
+	display: inline-block;
+	-webkit-transition: all 0.4s ease;
+	-moz-transition: all 0.4s ease;
+	transition: all 0.4s ease;
+	z-index: 5;
+	display: inline-block;
+	padding: 13px 32px;
+	border-radius: 0px;
+	text-transform:uppercase;
+
+    padding: 10px 20px;
+    /* background-color: #007bff; */
+    /* color: white; */
+    /* border: none; */
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.popup-buttons .btn:hover {
+
+	color:#fff;
+	background:#F7941D;
+    /* background-color: #0056b3; */
+}
+

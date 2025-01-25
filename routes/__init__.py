@@ -85,7 +85,7 @@ def register_all_routes(app: Flask):
     app.add_url_rule(
         rule='/add_to_cart/<int:lamp_id>',
         view_func=add_to_cart,
-        methods=['GET']
+        methods=['GET', 'POST']
     )
 
     app.add_url_rule(
